@@ -1,5 +1,7 @@
 package org.sid.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.sid.dao.CompetanceRepository;
@@ -34,6 +36,7 @@ public class EtudiantServiceImpl implements EtudiantService{
 	private LangueRepository langueRepository;
 	@Autowired
 	private CompetanceRepository competanceRepository;
+	
 	
 	
 	@Override
@@ -125,6 +128,11 @@ public class EtudiantServiceImpl implements EtudiantService{
 		
 		formationRepository.save(formation);
 		
+	}
+	@Override
+	public List<Appuser> getEtudiantMessagerie(String mot) {
+		// TODO Auto-generated method stub
+		return userRepository.getEtudiantMessagerie(mot);
 	}
 
 	

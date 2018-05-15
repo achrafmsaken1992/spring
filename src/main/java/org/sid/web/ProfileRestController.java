@@ -7,17 +7,23 @@ import org.sid.entities.Competance;
 import org.sid.entities.Experience;
 import org.sid.entities.Formation;
 import org.sid.entities.Language;
+import org.sid.entities.Offre;
 import org.sid.form.CompetanceForm;
 import org.sid.form.ExperienceForm;
 import org.sid.form.FormationForm;
 import org.sid.form.LangueForm;
 import org.sid.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,6 +35,8 @@ public class ProfileRestController {
 	EtudiantService etudiantService;
 	@Autowired
 	UserRepository userdao;
+	@Autowired 
+	OffreService offreService;
 	@PostMapping("etudiant/addExperience")
 	public void addExperience(@RequestBody ExperienceForm experienceForm) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -152,6 +160,8 @@ public class ProfileRestController {
 	public void updateFormation(@RequestBody FormationForm formationForm) {
 		etudiantService.updateFormation(formationForm);
 	}
+	
+
 	
 	
 }

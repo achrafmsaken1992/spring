@@ -17,12 +17,14 @@ import org.sid.dao.UserRepository;
 import org.sid.entities.AppRole;
 import org.sid.entities.Appuser;
 import org.sid.entities.Messagerie;
+import org.sid.entities.Offre;
 import org.sid.form.EmailMessages;
 import org.sid.form.EtudiantForm;
 import org.sid.form.RegisterForm;
 import org.sid.service.AccountService;
 import org.sid.service.CreateDirectoryService;
 import org.sid.service.EtudiantService;
+import org.sid.service.OffreService;
 import org.sid.service.SendmailService;
 import org.sid.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +69,8 @@ public class EtudiantRestController {
 	StorageService storageService;
 	@Autowired
 	SendmailService sendMail;
+	@Autowired
+	OffreService offreService;
 @Autowired
 CreateDirectoryService createDirectoryService;
 @Value("${gmail.username}")
@@ -240,7 +244,26 @@ accountService.saveUser(appUser);
 	
 		return accountService.getManagersMessagerie("%"+mot+"%");
    }
+	@RequestMapping(value="/etudiant/getAllOffres",method=RequestMethod.GET)
+	public Page<Offre> getManagers(
+			
+			@RequestParam(name="mot",defaultValue="")	String mot,
+			
+			
+			
+			
+			@RequestParam(name="page",defaultValue="0")	int page,
+			@RequestParam(name="size",defaultValue="4")	int size)
+   {Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	String loggedUsername = auth.getName();
 	
+	Appuser user=userdao.findUserByEmail(loggedUsername);
+		
+	return offreService.getAllOffres("%"+mot+"%", new PageRequest(page, size));
+		
+		
+		
+   }
 	
 	
 }

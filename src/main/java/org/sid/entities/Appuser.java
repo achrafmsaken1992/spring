@@ -38,7 +38,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 public class Appuser implements Serializable{
-	 @Id @GeneratedValue
+	
+	@Id @GeneratedValue
 	 Long id;
 	 @ManyToMany(fetch=FetchType.EAGER)
 		private Collection<AppRole> roles=new ArrayList<>();

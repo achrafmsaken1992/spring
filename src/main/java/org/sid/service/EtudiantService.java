@@ -1,5 +1,7 @@
 package org.sid.service;
 
+import java.util.List;
+
 import org.sid.entities.Appuser;
 import org.sid.entities.Competance;
 import org.sid.entities.Experience;
@@ -30,5 +32,6 @@ public interface EtudiantService {
 	public void addFormation(Formation formation);
 	public void deleteFormation(Long id);
 	public void updateFormation(FormationForm formationForm);
+	public List<Appuser>getEtudiantMessagerie(String mot);
 	
 }

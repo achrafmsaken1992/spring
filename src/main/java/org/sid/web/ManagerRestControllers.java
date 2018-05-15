@@ -1,6 +1,7 @@
 package org.sid.web;
 
 import java.util.Date;
+import java.util.List;
 
 import org.sid.dao.UserRepository;
 
@@ -10,6 +11,7 @@ import org.sid.form.ManagerForm;
 import org.sid.form.OffreForm;
 import org.sid.service.AccountService;
 import org.sid.service.CreateDirectoryService;
+import org.sid.service.EtudiantService;
 import org.sid.service.OffreService;
 import org.sid.service.SendmailService;
 import org.sid.service.StorageService;
@@ -52,10 +54,13 @@ public class ManagerRestControllers {
 	StorageService storageService;
 	@Autowired
 	SendmailService sendMail;
+	@Autowired
+	EtudiantService etudiantService;
 @Autowired
 CreateDirectoryService createDirectoryService;
 @Autowired 
 OffreService offreService;
+	@Autowired
 	
 	@Value("${gmail.username}")
 	private String username;
@@ -91,12 +96,13 @@ OffreService offreService;
 			Offre offre=new Offre();
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			String loggedUsername = auth.getName();
-			
+			Appuser appUser=userdao.findUserByEmail(loggedUsername);	
 		
 	offre.setDescription(offreForm.getDescription());
 	offre.setTitre(offreForm.getTitre());
 	offre.setImage(offreForm.getImage());
-	Appuser appUser=userdao.findUserByEmail(loggedUsername);
+	offre.setEntreprise(appUser.getNomEntreprise());
+
 	offre.setManager(appUser);
 	offre.setDate(new Date());
 	offre.setActive(1);
@@ -224,6 +230,23 @@ OffreService offreService;
 			
 			
 		}
+		
+		@RequestMapping(value="/manager/getEtudiantsMessagerie",method=RequestMethod.GET)
+		public List<Appuser> getEtudiants(
+				
+				@RequestParam(name="mot",defaultValue="")	String mot
+				
+			
+				
+				
+			)
+	   {
+			
+		
+			return etudiantService.getEtudiantMessagerie("%"+mot+"%");
+			
+			
+	   }
 		
    }
 	

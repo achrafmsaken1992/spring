@@ -27,6 +27,11 @@ public class OffreServiceImpl implements OffreService{
 		// TODO Auto-generated method stub
 		return offreRepository.findOffresByManager(id,mot,active,pageable);
 	}
+	@Override
+	public Page<Offre> getAllOffres(String mot,  Pageable pageable) {
+		// TODO Auto-generated method stub
+		return offreRepository.findAllOffres(mot, pageable);
+	}
 	
 
 }

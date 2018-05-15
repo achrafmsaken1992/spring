@@ -29,10 +29,11 @@ public interface UserRepository extends JpaRepository<Appuser, Long>{
 	public Page<Appuser> getManager(@Param("nom")String nom,@Param("prenom")String prenom,@Param("n")String nomEntreprise,@Param("active")int active,
 			@Param("valide")int valide,Pageable pageable);
 	
-	@Query("select c from Appuser c,AppRole r where c.nom like :n and c.active=:active and c.valide=:valide and r.roleName='Etudiant' and r  MEMBER OF  c.roles")
-	public Page<Appuser> getEtudiant(@Param("n")String nom,@Param("n")String prenom,@Param("active")int active,
+	@Query("select c from Appuser c,AppRole r where c.nom like :n and  c.prenom like :p and c.active=:active and c.valide=:valide and r.roleName='Etudiant' and r  MEMBER OF  c.roles")
+	public Page<Appuser> getEtudiant(@Param("n")String nom,@Param("p")String prenom,@Param("active")int active,
 			@Param("valide")int valide,Pageable pageable);
-	
+	@Query("select c from Appuser c,AppRole r where (c.nom like :mot or  c.prenom like :mot) and c.active=1 and c.valide=1 and r.roleName='Etudiant' and r  MEMBER OF  c.roles")
+	public List<Appuser> getEtudiantMessagerie(@Param("mot") String mot);
 	
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Appuser a SET a.image =:x  WHERE a.id =:id")
