@@ -38,24 +38,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 public class Appuser implements Serializable{
-	
-	@Id @GeneratedValue
-	 Long id;
-	 @ManyToMany(fetch=FetchType.EAGER)
-		private Collection<AppRole> roles=new ArrayList<>();
-	 @ColumnDefault("0")
-	 private int active;
-	 @ColumnDefault("0")
-	 private int valide;
-	 @OneToMany(mappedBy="manager",cascade=javax.persistence.CascadeType.REMOVE)
-	 private Collection<Offre> offres;
-	
-	public int getValide() {
-		return valide;
-	}
-	public void setValide(int valide) {
-		this.valide = valide;
-	}
 	String nom;
 	 String email;
 	 String prenom;
@@ -66,6 +48,33 @@ public class Appuser implements Serializable{
 	String tel;
 	String image;
 	String cin;
+	@Id @GeneratedValue
+	 Long id;
+	 @ManyToMany(fetch=FetchType.EAGER)
+		private Collection<AppRole> roles=new ArrayList<>();
+	 @ColumnDefault("0")
+	 private int active;
+	 @ColumnDefault("0")
+	 private int valide;
+	 @OneToMany(mappedBy="manager",cascade=javax.persistence.CascadeType.REMOVE)
+	 private Collection<Offre> offres;
+	 @OneToMany(mappedBy="etudiant",cascade=javax.persistence.CascadeType.REMOVE)
+	 private Collection<Note> notes;
+	 @JsonIgnore
+	public Collection<Note> getNotes() {
+		return notes;
+	}
+	 @JsonSetter
+	public void setNotes(Collection<Note> notes) {
+		this.notes = notes;
+	}
+	public int getValide() {
+		return valide;
+	}
+	public void setValide(int valide) {
+		this.valide = valide;
+	}
+	
 	
 	
 	
@@ -84,8 +93,17 @@ public class Appuser implements Serializable{
 	@ManyToMany(mappedBy = "user2")
 	private Collection<Appuser> user1;*/
 	
+	@OneToMany(mappedBy="etudiant")
+	private Collection<Reponse> reponses;
 	
-	
+	@JsonIgnore
+	public Collection<Reponse> getReponses() {
+		return reponses;
+	}
+	@JsonSetter
+	public void setReponses(Collection<Reponse> reponses) {
+		this.reponses = reponses;
+	}
 	@OneToMany(mappedBy="etudiant")
 	private Collection<Competance> competance; 
 	 
@@ -127,6 +145,7 @@ public class Appuser implements Serializable{
 	public Collection<Language> getLangue() {
 		return langue;
 	}
+	
 	public void setLangue(Collection<Language> langue) {
 		this.langue = langue;
 	}

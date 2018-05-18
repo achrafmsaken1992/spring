@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import org.sid.entities.Offre;
 
 public class QcmForm {
+	Long id;
 	int duree;
 	String titre;
 	Long offre;
@@ -14,6 +15,12 @@ public class QcmForm {
 	}
 	public void setDuree(int duree) {
 		this.duree = duree;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getTitre() {
 		return titre;

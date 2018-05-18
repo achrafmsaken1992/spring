@@ -8,11 +8,19 @@ import javax.persistence.ManyToOne;
 import org.sid.entities.Question;
 
 public class SuggestionForm {
-	
+	Long id;
 	String suggestion;
 	int reponse;
 	
 	Long question;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getSuggestion() {
 		return suggestion;

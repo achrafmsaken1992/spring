@@ -27,6 +27,16 @@ Offre offre;
 
 @OneToMany(mappedBy="qcm",cascade=javax.persistence.CascadeType.REMOVE)
 private Collection<Question> questions;
+@OneToMany(mappedBy="qcm",cascade=javax.persistence.CascadeType.REMOVE)
+private Collection<Note> notes;
+@JsonIgnore
+public Collection<Note> getNotes() {
+	return notes;
+}
+@JsonIgnore
+public void setNotes(Collection<Note> notes) {
+	this.notes = notes;
+}
 @JsonIgnore
 public Collection<Question> getQuestions() {
 	return questions;
