@@ -17,4 +17,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long>{
 	@Query("select q from Question q where q.qcm.id=:qcm")
 	public Page<Question> getQuestions(@Param("qcm") Long qcm,Pageable pageable);
 	
+	
+	@Query("select count(q) from Question q where q.qcm.id=:qcm  and (count(q.suggestions)>=1)")
+	public Long nbrQuestions(@Param("qcm") Long qcm);
 }

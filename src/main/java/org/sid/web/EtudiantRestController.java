@@ -79,16 +79,7 @@ private String username;
 private String password;
 
 
-@RequestMapping(value="/etudiant/userProfile", method = RequestMethod.GET)
 
-public Appuser getManagerProfile() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String loggedUsername = auth.getName();
-		Appuser user=userdao.findUserByEmail(loggedUsername);
-		
-		return user;
-		
-}
 	
 	@PostMapping("admin/ajoutEtudiant")
 	public Appuser ajoutEtudiant(@RequestBody EtudiantForm form) {

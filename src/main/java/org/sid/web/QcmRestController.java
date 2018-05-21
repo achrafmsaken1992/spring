@@ -9,6 +9,7 @@ import org.sid.entities.Qcm;
 import org.sid.entities.Question;
 import org.sid.entities.Suggestion;
 import org.sid.form.EtudiantForm;
+import org.sid.form.NoteForm;
 import org.sid.form.QcmForm;
 import org.sid.form.QuestionForm;
 import org.sid.form.ReponseForm;
@@ -86,7 +87,7 @@ public class QcmRestController {
 			
 			
 			@RequestParam(name="page",defaultValue="0")	int page,
-			@RequestParam(name="size",defaultValue="5")	int size)
+			)
    {
 		
 	
@@ -170,6 +171,85 @@ public class QcmRestController {
 		
 		
    }
+	@PostMapping("etudiant/addNote")
+	public void addNote(@RequestBody NoteForm noteForm) {
+		qcmService.addNote(noteForm);
+	}
+	@RequestMapping(value="/findNoteByqcm",method=RequestMethod.GET)
+	public Page<Note> findNoteByqcm(
+		
+			@RequestParam(name="qcm")	Long qcm,
+	@RequestParam(name="page",defaultValue="0")	int page)
+			
+			{
+				return qcmService.findNoteByqcm(qcm,new PageRequest(page,5));
+		
+		
+	}
+	@RequestMapping(value="/nbrParticipantsQcm",method=RequestMethod.GET)
+	public Long nbrParticipantsQcm(
+		
+			@RequestParam(name="qcm")	Long qcm)
+			
+			{
+				return qcmService.nbrParticipants(qcm);
+		
+		
+	}
+	@RequestMapping(value="/nbrParticipantsReussisQcm",method=RequestMethod.GET)
+	public Long nbrParticipantsReussisQcm(
+		
+			@RequestParam(name="qcm")	Long qcm)
+			
+			{
+				return qcmService.nbrParticipantsReussis(qcm);
+		
+		
+	}
+	
+	
+	
+	@RequestMapping(value="/moyenneNoteQcm",method=RequestMethod.GET)
+	public int moyenneNoteQcm(
+		
+			@RequestParam(name="qcm")	Long qcm)
+			
+			{
+				return qcmService.moyenne(qcm);
+		
+		
+	}
+	@RequestMapping(value="/meuilleurNoteQcm",method=RequestMethod.GET)
+	public int meuilleurNoteQcm(
+		
+			@RequestParam(name="qcm")	Long qcm)
+			
+			{
+				return qcmService.meuilleurNote(qcm);
+		
+		
+	}
+	@RequestMapping(value="/plusMauvaisNoteQcm",method=RequestMethod.GET)
+	public int plusMauvaisNote(
+		
+			@RequestParam(name="qcm")	Long qcm)
+			
+			{
+				return qcmService.plusMauvaisNote(qcm);
+		
+		
+	}
+	@RequestMapping(value="/findQuizById",method=RequestMethod.GET)
+	public Qcm findQuizById(
+		
+			@RequestParam(name="qcm")	Long qcm
+	)
+			
+			{
+				return qcmService.findQcmById(qcm);
+		
+		
+	}
 	
 	
 }

@@ -8,6 +8,7 @@ import org.sid.entities.Qcm;
 import org.sid.entities.Question;
 import org.sid.entities.Reponse;
 import org.sid.entities.Suggestion;
+import org.sid.form.NoteForm;
 import org.sid.form.QcmForm;
 import org.sid.form.QuestionForm;
 import org.sid.form.ReponseForm;
@@ -33,5 +34,14 @@ public void updateSuggestion(SuggestionForm suggestionForm);
 public void addReponse(ReponseForm reponseForm);
 //public List<Reponse> getReponses(Long etudiant,Long question);
 public Note findNoteByqcmByetudiant(Long etudiant,Long qcm);
+public void addNote(NoteForm noteForm);
 public Page<Question> getQuestions(Long qcm,Pageable pageable);
+public Page<Note> findNoteByqcm(Long qcm,Pageable pageable);
+public Long nbrParticipants(Long qcm);
+public int moyenne(Long qcm);
+public int meuilleurNote(Long qcm);
+public int plusMauvaisNote(Long qcm);
+public Qcm findQcmById(Long qcm);
+public Long nbrParticipantsReussis(Long qcm);
+
 }

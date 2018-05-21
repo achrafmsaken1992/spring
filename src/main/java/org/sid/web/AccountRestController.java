@@ -22,6 +22,7 @@ import org.sid.entities.Messagerie;
 import org.sid.form.ActiveAccount;
 import org.sid.form.EmailMessages;
 import org.sid.form.ForgetPasswordForm;
+import org.sid.form.MessagerieForm;
 import org.sid.form.RegisterForm;
 import org.sid.service.AccountService;
 import org.sid.service.CreateDirectoryService;
@@ -31,6 +32,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -66,6 +69,9 @@ CreateDirectoryService createDirectoryService;
 	@Value("${gmail.password}")
 	private String password;
  
+	
+	
+	
     	@PostMapping("/register")
     	public Long register(@RequestBody RegisterForm form) {
 
@@ -200,10 +206,44 @@ appUser.setToken(uuid);
     	}
 
     	@PostMapping("/addMessage")
-    	public void addMessage(@RequestBody Messagerie messagerie) {
+    	public void addMessage(@RequestBody MessagerieForm messagerie) {
     		accountService.addMessagerie(messagerie);
     	}
 
+//getMessageriesCall
+    	@RequestMapping(value="/getNotifications",method=RequestMethod.GET)
+    	public Page<Messagerie> getMessageriesCall(
+    			
+    			@RequestParam(name="user")	Long user,
+    			
+    			
+    			
+    			
+    			@RequestParam(name="size",defaultValue="10")	int size)
+       {
+    		
+    	
+    		return accountService.getMessageriesCall(user, new PageRequest(0, size));
+    				//new PageRequest(page, size)
+    		
+    		
+       }
+    	@RequestMapping(value="/userProfile", method = RequestMethod.GET)
 
-
+		public Appuser getManagerProfile() {
+			
+			
+			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				String loggedUsername = auth.getName();
+				Appuser user=userdao.findUserByEmail(loggedUsername);
+				
+				return user;
+				
+				
+			
+			
+			
+			
+		}
 }

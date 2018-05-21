@@ -41,4 +41,10 @@ public interface UserRepository extends JpaRepository<Appuser, Long>{
 	
 	@Query("select c from Appuser c,AppRole r where (c.nom like :mot or c.prenom like :mot or c.nomEntreprise like :mot) and c.active=1 and c.valide=1 and r.roleName='MANAGER' and r  MEMBER OF  c.roles")
 	public List<Appuser> getManagersMessagerie(@Param("mot")String mot);
+	
+	@Query("select c from Appuser c where  (ANY(select e.motCle from c.experience e ) like :exp)"
+			+ "and (ANY(select co.name from c.competance co ) like :comp)")
+	public List<Appuser> getProfile(@Param("exp")String exp,@Param("comp") String comp);
+	
+
 }

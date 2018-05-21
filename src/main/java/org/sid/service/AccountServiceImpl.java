@@ -14,6 +14,7 @@ import org.sid.dao.RoleRepository;
 import org.sid.dao.UserRepository;
 import org.sid.entities.Appuser;
 import org.sid.entities.Messagerie;
+import org.sid.form.MessagerieForm;
 import org.sid.entities.AppRole;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
 	private RoleRepository roleRepository;
 	@Autowired
-	private MessagerieRepository MessagerieRepository;
+	private MessagerieRepository messagerieRepository;
 		@Override
 		public Appuser saveUser(Appuser user) {
 		
@@ -130,14 +131,26 @@ Appuser appUser=userRepository.findUserByEmail(username);
 			@Override
 			public List<Messagerie> messageries(Long user1, Long user2) {
 				// TODO Auto-generated method stub
-				return MessagerieRepository.getMessagerie(user1,user2);
+				return messagerieRepository.getMessagerie(user1,user2);
 			}
 
 			@Override
-			public void addMessagerie(Messagerie messagerie) {
+			public void addMessagerie(MessagerieForm messagerieForm) {
+				Appuser user1=userRepository.findOne(messagerieForm.getUser1());
+				Appuser user2=userRepository.findOne(messagerieForm.getUser2());
+				Messagerie messagerie=new Messagerie();
 				messagerie.setDate(new Date());
-				MessagerieRepository.save(messagerie);
+				messagerie.setUser1(user1);
+				messagerie.setUser2(user2);
+				messagerie.setMessage(messagerieForm.getMessage());
+				messagerieRepository.save(messagerie);
 				
+			}
+
+			@Override
+			public Page<Messagerie> getMessageriesCall(Long user, Pageable pageable) {
+				// TODO Auto-generated method stub
+				return messagerieRepository.getMessageriesCall(user, pageable);
 			}
 		
 

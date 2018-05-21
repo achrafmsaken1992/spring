@@ -212,24 +212,7 @@ OffreService offreService;
 		
 		
 		
-		@RequestMapping(value="/manager/userProfile", method = RequestMethod.GET)
-
-		public Appuser getManagerProfile() {
-			
-			
-			
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-				String loggedUsername = auth.getName();
-				Appuser user=userdao.findUserByEmail(loggedUsername);
-				
-				return user;
-				
-				
-			
-			
-			
-			
-		}
+		
 		
 		@RequestMapping(value="/manager/getEtudiantsMessagerie",method=RequestMethod.GET)
 		public List<Appuser> getEtudiants(

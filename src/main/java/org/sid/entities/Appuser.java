@@ -60,7 +60,29 @@ public class Appuser implements Serializable{
 	 private Collection<Offre> offres;
 	 @OneToMany(mappedBy="etudiant",cascade=javax.persistence.CascadeType.REMOVE)
 	 private Collection<Note> notes;
+	 
+	 
+	 @OneToMany(mappedBy="user1",cascade=javax.persistence.CascadeType.REMOVE)
+	 private Collection<Messagerie> messageries1;
+	 @OneToMany(mappedBy="user2",cascade=javax.persistence.CascadeType.REMOVE)
+	 private Collection<Messagerie> messageries2;
 	 @JsonIgnore
+	 public Collection<Messagerie> getMessageries1() {
+		return messageries1;
+	}
+	 @JsonSetter
+	public void setMessageries1(Collection<Messagerie> messageries1) {
+		this.messageries1 = messageries1;
+	}
+	@JsonIgnore
+	public Collection<Messagerie> getMessageries2() {
+		return messageries2;
+	}
+	@JsonSetter
+	public void setMessageries2(Collection<Messagerie> messageries2) {
+		this.messageries2 = messageries2;
+	}
+	@JsonIgnore
 	public Collection<Note> getNotes() {
 		return notes;
 	}

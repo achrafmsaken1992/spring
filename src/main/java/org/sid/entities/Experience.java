@@ -22,6 +22,7 @@ public class Experience {
 	private String date1;
 	private String date2;
 	private String titre;
+	private String motCle;
   	public String getEntreprise() {
 		return entreprise;
 	}

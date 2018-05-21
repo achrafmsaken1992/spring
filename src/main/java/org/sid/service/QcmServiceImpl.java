@@ -18,6 +18,7 @@ import org.sid.entities.Qcm;
 import org.sid.entities.Question;
 import org.sid.entities.Reponse;
 import org.sid.entities.Suggestion;
+import org.sid.form.NoteForm;
 import org.sid.form.QcmForm;
 import org.sid.form.QuestionForm;
 import org.sid.form.ReponseForm;
@@ -195,6 +196,52 @@ public class QcmServiceImpl implements QcmService{
 	public Page<Question> getQuestions(Long qcm, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return questionRepository.getQuestions(qcm, pageable);
+	}
+	@Override
+	public void addNote(NoteForm noteForm) {
+Note note =new Note();
+Appuser etudiant=userRepository.findOne(noteForm.getEtudiantId());
+Qcm qcm=qcmRepository.findOne(noteForm.getQcmId());
+note.setEtudiant(etudiant);
+note.setQcm(qcm);
+note.setReponseCorrect(noteForm.getReponseC());
+note.setReponseFausse(noteForm.getReponseF());
+noteRpository.save(note);
+	}
+	@Override
+	public Page<Note> findNoteByqcm(Long qcm,Pageable pageable) {
+		// TODO Auto-generated method stub
+		return noteRpository.findNoteByqcm(qcm,pageable);
+	}
+	@Override
+	public Long nbrParticipants(Long qcm) {
+		
+		return noteRpository.nbrParticipants(qcm);
+	}
+	@Override
+	public int moyenne(Long qcm) {
+		// TODO Auto-generated method stub
+		return (int)noteRpository.moyenne(qcm);
+	}
+	@Override
+	public int meuilleurNote(Long qcm) {
+		// TODO Auto-generated method stub
+		return (int)noteRpository.plusMauvaisNote(qcm);
+	}
+	@Override
+	public int plusMauvaisNote(Long qcm) {
+		// TODO Auto-generated method stub
+		return (int)noteRpository.plusMauvaisNote(qcm);
+	}
+	@Override
+	public Qcm findQcmById(Long qcm) {
+	
+		return qcmRepository.findOne(qcm);
+	}
+	@Override
+	public Long nbrParticipantsReussis(Long qcm) {
+		// TODO Auto-generated method stub
+		return noteRpository.nbrParticipantsReussis(qcm);
 	}
 	
 	

@@ -29,5 +29,6 @@ public List<Appuser> getManagersMessagerie(String mot);
 public Appuser findUserById(Long id);
 public void updateImage(String image,Long id);
 public List<Messagerie> messageries(Long user1,Long user2);
-public void addMessagerie(Messagerie messagerie);
+public void addMessagerie(MessagerieForm messagerieForm);
+public Page<Messagerie> getMessageriesCall(Long user,Pageable pageable);
 }
