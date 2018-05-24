@@ -43,13 +43,21 @@ public class QcmRestController {
 	}
 	
 	@RequestMapping(value="/getQcmsByOffre",method=RequestMethod.GET)
-	public List<Qcm> getQcms(
-			
-			@RequestParam(name="id")	Long id){
+	public List<Qcm> getQcms(		@RequestParam(name="id")	Long id){
 				return qcmService.getQcmsByOffre(id);
 		
 		
 	}
+	
+	@RequestMapping(value="/getQcmsByOffreManager",method=RequestMethod.GET)
+	public List<Qcm> getQcmsManager(@RequestParam(name="id")	Long id){
+				return qcmService.getQcmsByOffreManager(id);
+		
+		
+	}
+	//getQcmsByOffre
+	
+	
 	@PostMapping("/manager/deleteQuiz")
 	public void deleteQcms(@RequestBody Long id) {
 		qcmService.deleteQcm(id);
@@ -172,8 +180,9 @@ public class QcmRestController {
 		
    }
 	@PostMapping("etudiant/addNote")
-	public void addNote(@RequestBody NoteForm noteForm) {
-		qcmService.addNote(noteForm);
+	public Long addNote(@RequestBody NoteForm noteForm) {
+		return qcmService.addNote(noteForm);
+		
 	}
 	@RequestMapping(value="/findNoteByqcm",method=RequestMethod.GET)
 	public Page<Note> findNoteByqcm(

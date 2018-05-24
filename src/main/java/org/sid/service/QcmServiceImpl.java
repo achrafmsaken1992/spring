@@ -198,15 +198,16 @@ public class QcmServiceImpl implements QcmService{
 		return questionRepository.getQuestions(qcm, pageable);
 	}
 	@Override
-	public void addNote(NoteForm noteForm) {
+	public Long addNote(NoteForm noteForm) {
 Note note =new Note();
 Appuser etudiant=userRepository.findOne(noteForm.getEtudiantId());
 Qcm qcm=qcmRepository.findOne(noteForm.getQcmId());
 note.setEtudiant(etudiant);
 note.setQcm(qcm);
+note.setId(noteForm.getId());
 note.setReponseCorrect(noteForm.getReponseC());
 note.setReponseFausse(noteForm.getReponseF());
-noteRpository.save(note);
+return noteRpository.save(note).getId();
 	}
 	@Override
 	public Page<Note> findNoteByqcm(Long qcm,Pageable pageable) {
@@ -242,6 +243,11 @@ noteRpository.save(note);
 	public Long nbrParticipantsReussis(Long qcm) {
 		// TODO Auto-generated method stub
 		return noteRpository.nbrParticipantsReussis(qcm);
+	}
+	@Override
+	public List<Qcm> getQcmsByOffreManager(Long id) {
+		// TODO Auto-generated method stub
+		return qcmRepository.getQcmsByOffresManager(id);
 	}
 	
 	

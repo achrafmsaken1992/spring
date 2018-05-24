@@ -255,6 +255,15 @@ accountService.saveUser(appUser);
 		
 		
    }
+	@RequestMapping(value="getEtudiantById",method=RequestMethod.GET)
+	public Appuser getEtudiantById(
+			@RequestParam(name="id")Long id
+			)
+			
+   {
+		
 	
+		return accountService.findUserById(id);
+   }
 	
 }

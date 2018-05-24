@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 public interface QcmService {
 public void addQcm(QcmForm qcmForm);
 public List<Qcm> getQcmsByOffre(Long id);
+public List<Qcm> getQcmsByOffreManager(Long id);
 public void deleteQcm(Long id);
 public void updateQcm(QcmForm qcmForm);
 
@@ -34,7 +35,7 @@ public void updateSuggestion(SuggestionForm suggestionForm);
 public void addReponse(ReponseForm reponseForm);
 //public List<Reponse> getReponses(Long etudiant,Long question);
 public Note findNoteByqcmByetudiant(Long etudiant,Long qcm);
-public void addNote(NoteForm noteForm);
+public Long addNote(NoteForm noteForm);
 public Page<Question> getQuestions(Long qcm,Pageable pageable);
 public Page<Note> findNoteByqcm(Long qcm,Pageable pageable);
 public Long nbrParticipants(Long qcm);

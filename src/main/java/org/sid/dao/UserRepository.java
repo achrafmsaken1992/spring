@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 
 public interface UserRepository extends JpaRepository<Appuser, Long>{
@@ -45,6 +46,11 @@ public interface UserRepository extends JpaRepository<Appuser, Long>{
 	@Query("select c from Appuser c where  (ANY(select e.motCle from c.experience e ) like :exp)"
 			+ "and (ANY(select co.name from c.competance co ) like :comp)")
 	public List<Appuser> getProfile(@Param("exp")String exp,@Param("comp") String comp);
+	
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Appuser a SET a.tokenNotification =:x  WHERE a.id =:id")
+	public void updateTokenNotification(@Param("x") String notification, @Param("id")Long id );
 	
 
 }

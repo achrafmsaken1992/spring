@@ -5,7 +5,14 @@ public class MessagerieForm {
 String message;
 Long user1;
 Long user2;
+String image;
 
+public String getImage() {
+	return image;
+}
+public void setImage(String image) {
+	this.image = image;
+}
 public Long getId() {
 	return id;
 }

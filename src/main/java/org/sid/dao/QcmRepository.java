@@ -9,6 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface QcmRepository extends JpaRepository<Qcm, Long>{
-	@Query("select q from Qcm q where q.offre.id=:id")
+	@Query("select q from Qcm q where q.offre.id=:id and ((select count(*) from Question qu "
+			+ "where qu MEMBER OF q.questions  and ((select count(*) from Suggestion s where s MEMBER OF qu.suggestions)>=1))>=3) ")
 	public List<Qcm> getQcmsByOffre(@Param("id") Long id);
+	
+	@Query("select q from Qcm q where q.offre.id=:id")
+	public List<Qcm> getQcmsByOffresManager(@Param("id") Long id);
 }

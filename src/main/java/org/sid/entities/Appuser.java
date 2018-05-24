@@ -38,6 +38,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 public class Appuser implements Serializable{
+	
+
+
+
 	String nom;
 	 String email;
 	 String prenom;
@@ -48,6 +52,7 @@ public class Appuser implements Serializable{
 	String tel;
 	String image;
 	String cin;
+	 String tokenNotification;
 	@Id @GeneratedValue
 	 Long id;
 	 @ManyToMany(fetch=FetchType.EAGER)
@@ -60,7 +65,14 @@ public class Appuser implements Serializable{
 	 private Collection<Offre> offres;
 	 @OneToMany(mappedBy="etudiant",cascade=javax.persistence.CascadeType.REMOVE)
 	 private Collection<Note> notes;
-	 
+	
+		public String getTokenNotification() {
+			return tokenNotification;
+		}
+		public void setTokenNotification(String tokenNotification) {
+			this.tokenNotification = tokenNotification;
+		}
+
 	 
 	 @OneToMany(mappedBy="user1",cascade=javax.persistence.CascadeType.REMOVE)
 	 private Collection<Messagerie> messageries1;

@@ -26,6 +26,7 @@ import org.sid.form.MessagerieForm;
 import org.sid.form.RegisterForm;
 import org.sid.service.AccountService;
 import org.sid.service.CreateDirectoryService;
+import org.sid.service.FcmPushTest;
 import org.sid.service.SendmailService;
 import org.sid.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -207,7 +209,28 @@ appUser.setToken(uuid);
 
     	@PostMapping("/addMessage")
     	public void addMessage(@RequestBody MessagerieForm messagerie) {
+    		
+    		try {
+                String response= FcmPushTest.pushFCMNotificationToOneUser(userdao.getOne(messagerie.getUser2()).getTokenNotification(),123456L,messagerie.getImage());
+                System.out.println("firebase response server :: "+response);
+            }
+    		
+            catch (Exception ex)
+            {
+                System.out.println("Exeption firebase response server  : "+ex.getMessage());
+            }
+    	
+    	
     		accountService.addMessagerie(messagerie);
+    	}
+    	
+    	@PostMapping("/updateTokenNotification")
+    	public void updateToken(
+    			@RequestParam(name="notification")	String notification ,
+    			@RequestParam(name="id")	Long id ) {
+    		
+    		userdao.updateTokenNotification(notification, id);
+    		
     	}
 
 //getMessageriesCall
@@ -219,7 +242,7 @@ appUser.setToken(uuid);
     			
     			
     			
-    			@RequestParam(name="size",defaultValue="10")	int size)
+    			@RequestParam(name="size",defaultValue="5")	int size)
        {
     		
     	
