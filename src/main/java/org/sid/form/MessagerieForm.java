@@ -6,7 +6,13 @@ String message;
 Long user1;
 Long user2;
 String image;
-
+String body;
+public String getBody() {
+	return body;
+}
+public void setBody(String body) {
+	this.body = body;
+}
 public String getImage() {
 	return image;
 }

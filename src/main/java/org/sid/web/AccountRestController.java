@@ -101,13 +101,13 @@ appUser.setDateNaissance(form.getDateNaissance());
     		
 String uuid=this.getUuid();
 appUser.setToken(uuid);
-    			//EmailMessages em = new EmailMessages();
-    			//em.setBody("<a href='http://localhost:4200/activation/"+uuid+"'>validation mail</a>");
-    			//em.setTo_address(appUser.getEmail());
-    			//em.setSubject("validation email");
-    			//try {
+    			EmailMessages em = new EmailMessages();
+    			em.setBody("<a href='http://localhost:4200/activation/"+uuid+"'>validation mail</a>");
+    			em.setTo_address(appUser.getEmail());
+    			em.setSubject("validation email");
+    			try {
 
-    				//sendMail.sendmail(em,username,password);
+    				sendMail.sendmail(em,username,password);
     				if(nbr ==0) {
     					appUser.setValide(1);
     				}
@@ -119,20 +119,22 @@ appUser.setToken(uuid);
     				} else {
     					accountService.saveRole(new AppRole(null, "MANAGER"));
     					accountService.addRoleToUser(form.getEmail(), "MANAGER");
-    				
+    					createDirectoryService.CreateDirectory("entreprise/"+form.getNomEntreprise()+"/offres");
+    	    			createDirectoryService.CreateDirectory("entreprise/"+form.getNomEntreprise()+"/profile");
+    	    			//createDirectoryService.CreateDirectory(form.getCompanyName()+"/Candidates");
     				}
 
-    			/*} catch (MessagingException e) {
-    				//e.printStackTrace();
+    			} catch (MessagingException e) {
+    				e.printStackTrace();
     			} catch (IOException e) {
-    				// TODO Auto-generated catch block
-    				//e.printStackTrace();
-    			}*/
-    			if(nbr!=0) {
     				
-    			//createDirectoryService.CreateDirectory(form.getCompanyName()+"/Rhs");
-    			//createDirectoryService.CreateDirectory(form.getCompanyName()+"/Logos");
-    			//createDirectoryService.CreateDirectory(form.getCompanyName()+"/Candidates");
+    				e.printStackTrace();
+    			}
+    			if(nbr!=0) {
+    				//createDirectoryService.CreateDirectory("entreprise/"+form.getNomEntreprise()+"/offres");
+	    			//createDirectoryService.CreateDirectory("entreprise/"+form.getNomEntreprise()+"/profile");
+	    			//createDirectoryService.CreateDirectory(form.getCompanyName()+"/Candidates");	
+    		
     			}
     			else
     				createDirectoryService.CreateDirectory("/Admin");
@@ -211,7 +213,7 @@ appUser.setToken(uuid);
     	public void addMessage(@RequestBody MessagerieForm messagerie) {
     		
     		try {
-                String response= FcmPushTest.pushFCMNotificationToOneUser(userdao.getOne(messagerie.getUser2()).getTokenNotification(),123456L,messagerie.getImage());
+                String response= FcmPushTest.pushFCMNotificationToOneUser(userdao.getOne(messagerie.getUser2()).getTokenNotification(),123456L,messagerie.getImage(),messagerie.getBody());
                 System.out.println("firebase response server :: "+response);
             }
     		
@@ -269,4 +271,18 @@ appUser.setToken(uuid);
 			
 			
 		}
+    	
+    	@RequestMapping(value="isActive",method = RequestMethod.GET)
+    	public Appuser isActive(
+    		@RequestParam(name="email")	String email) {
+    	if(userdao.findUserByEmail(email).getActive()==0)throw new RuntimeException("erreur1");
+    		
+				return userdao.findUserByEmail(email);
+    	
+				
+    		
+    		
+    	}
+    	
+    	
 }
