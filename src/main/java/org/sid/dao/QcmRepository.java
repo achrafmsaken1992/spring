@@ -15,4 +15,8 @@ public interface QcmRepository extends JpaRepository<Qcm, Long>{
 	
 	@Query("select q from Qcm q where q.offre.id=:id")
 	public List<Qcm> getQcmsByOffresManager(@Param("id") Long id);
+	
+	@Query("select count(*) from Qcm q where q.id=:id and q.offre.manager.id=:u")
+	public int qcmManager(@Param("id")Long id,@Param("u")Long u );
+	
 }

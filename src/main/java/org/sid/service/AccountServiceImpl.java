@@ -153,7 +153,28 @@ Appuser appUser=userRepository.findUserByEmail(username);
 				return messagerieRepository.getMessageriesCall(user, pageable);
 			}
 		
+			@Override
+			public void recoveryPassword(String tokenRecovery, String dateExpiration, Long id) {
+				userRepository.recoveryPassword(tokenRecovery, dateExpiration, id);
+			}
+			@Override
+			public Appuser findByTokenRecovery(String token) {
+				// TODO Auto-generated method stub
+				return userRepository.findByTokenRecovery(token);
+			}
 
+			@Override
+			public int valideCompteManager(Long id) {
+				int a=userRepository.valideCManager(id);
+				return a;
+				
+			}
+
+			@Override
+			public void updateResume(Long id, String resume) {
+				//this.userRepository.updateResume(resume, id);
+				
+			}
 		
 
 

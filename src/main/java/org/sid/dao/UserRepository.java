@@ -2,6 +2,7 @@ package org.sid.dao;
 
 import java.util.List;
 
+
 import org.sid.entities.Appuser;
 
 import org.springframework.data.domain.Page;
@@ -14,7 +15,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 public interface UserRepository extends JpaRepository<Appuser, Long>{
+	
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Appuser a SET a.valide =1   WHERE a.id =:id")
 
+	int valideCManager( @Param("id")Long id  );
+	
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Appuser a SET a.resume =:x  WHERE a.id =:id")
+	public void updateResume(@Param("x") String resume, @Param("id")Long id );
+	
+	
+	
+	
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Appuser a SET a.tokenRecovery =:x , a.dateExpiration =:y  WHERE a.id =:id")
+	public void recoveryPassword(@Param("x") String tokenRecovery, @Param("y")String dateExpiration, @Param("id")Long id );
 
 	
 	@Query("select a from Appuser a where a.email=:email")
@@ -52,5 +70,10 @@ public interface UserRepository extends JpaRepository<Appuser, Long>{
 	@Query("UPDATE Appuser a SET a.tokenNotification =:x  WHERE a.id =:id")
 	public void updateTokenNotification(@Param("x") String notification, @Param("id")Long id );
 	
+	
+	public Appuser findByTokenRecovery(String token);
+	
+
+
 
 }

@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -24,6 +25,7 @@ import org.sid.form.EmailMessages;
 import org.sid.form.ForgetPasswordForm;
 import org.sid.form.MessagerieForm;
 import org.sid.form.RegisterForm;
+import org.sid.form.UpdatePasswordForm;
 import org.sid.service.AccountService;
 import org.sid.service.CreateDirectoryService;
 import org.sid.service.FcmPushTest;
@@ -35,6 +37,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -213,7 +216,7 @@ appUser.setToken(uuid);
     	public void addMessage(@RequestBody MessagerieForm messagerie) {
     		
     		try {
-                String response= FcmPushTest.pushFCMNotificationToOneUser(userdao.getOne(messagerie.getUser2()).getTokenNotification(),123456L,messagerie.getImage(),messagerie.getBody());
+                String response= FcmPushTest.pushFCMNotificationToOneUser(userdao.getOne(messagerie.getUser2()).getTokenNotification(),messagerie.getUser1(),messagerie.getImage(),messagerie.getBody());
                 System.out.println("firebase response server :: "+response);
             }
     		
@@ -283,6 +286,175 @@ appUser.setToken(uuid);
     		
     		
     	}
+    	
+    	
+    	
+    	//-------------------------update password-----------------------------------------
+    	@PostMapping("/updatePassword")
+    	public void updatePassword(@RequestBody UpdatePasswordForm udf) {
+    		
+    		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		String loggedUsername = auth.getName();
+    		
+    		Appuser user=userdao.findUserByEmail(loggedUsername);
+    		
+    		
+    	
+    		 if(!BCrypt.checkpw(udf.getOldpassword(), user.getPassword()))
+    		
+    			 throw new RuntimeException("ancien mot de passe incorrect");
+    	 if(!udf.getPassword().equals(udf.getRepassword())) {
+    			throw new RuntimeException("vous devez confirmer mot de passe");
+    		}
+    		
+    		user.setPassword(udf.getPassword());
+    			
+    		
+    			accountService.saveUser(user);
+    		
+    		
+    		
+    	}
+    	
+    	
+    	
+    	
+    	//------------------------send link recovery password---------------------------------- 
+    	@PostMapping("/recoveryPassword")
+    	public void recoveryPassword(@RequestBody String email) {
+    		
+    		
+    		String digest="";
+    		UUID uuid = UUID.randomUUID();
+    		String DateExpiration = LocalDate.now().plusDays(1).toString();
+    		if(accountService.findUserByEmail(email)==null) {
+    			throw new RuntimeException("email n\'existe pas");
+    		}
+    		
+    		
+    		
+    		try {
+    		try {
+    			
+    		
+    				MessageDigest salt;
+    				salt = MessageDigest.getInstance("SHA-256");
+    				salt.update(UUID.randomUUID().toString().getBytes("UTF-8"));
+    				StringBuilder builder = new StringBuilder();
+    			    for (byte b: salt.digest()) {
+    			      builder.append(String.format("%02x", b));}
+    			    
+    				 digest =  builder.toString();
+    			} catch (NoSuchAlgorithmException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    			
+    		   
+    		} catch (UnsupportedEncodingException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		}
+
+    		
+    		EmailMessages em = new EmailMessages();
+    		em.setBody("<a href='http://localhost:4200/updateAuth/"+digest
+    		+"'>lien web</a>");
+    		em.setTo_address(email);
+    		em.setSubject("validation");
+    		
+
+    			try {
+    				sendMail.sendmail(em,username,password);
+    				Appuser appUser=accountService.findUserByEmail(email);
+    				
+    				
+    			accountService.recoveryPassword(digest, DateExpiration, appUser.getId());
+    				
+    			} catch (MessagingException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			} catch (IOException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    			
+    			
+    		
+    		
+    	}
+
+    		 //----------------------send link recovery password---------------------------------------- 
+    		
+    	
+    	//-----------------------recovery password-------------------------------- 
+    	@PostMapping("/updateAuthentification")
+    		public void  updateAuthentification(@RequestBody ForgetPasswordForm fpf) {  
+    			  
+    			  if(!fpf.getPassword().equals(fpf.getRepassword())) 
+    				  throw new RuntimeException("vous devez valider mot de passe");
+    			  
+    			  Appuser appUser=accountService.findByTokenRecovery(fpf.getToken());
+    			   if(appUser==null)
+    				  throw new RuntimeException("token n\'existe pas");
+    			  if(checkDateExpiration(appUser.getDateExpiration()))
+    				  throw new RuntimeException("token expiré");
+    			  
+    			  appUser.setDateExpiration(null);
+    			  appUser.setTokenRecovery(null);
+    			  appUser.setPassword(fpf.getPassword());
+    			  accountService.saveUser(appUser);
+    			  
+    		
+    	}
+    	
+    	
+    	
+    	public boolean checkDateExpiration(String dateExperition) {
+    		 SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd"); 
+    		Date dateNow = null;
+    		Date dateExpiration = null;
+    		
+    			try {
+    				dateNow=dt.parse(LocalDate.now().toString());
+    				dateExpiration = dt.parse(dateExperition);
+    				
+    			} catch (ParseException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			} 
+    			 
+    			 if (dateExpiration.after(dateNow)) {
+    				return false; 
+    			 }
+    			 return true;
+    	}
+    	
+    	
+    	
+    	//--------------------end recovery password---------------------------
+    	
+    	@RequestMapping(value="/admin/valideDemande", method = RequestMethod.GET)
+    	
+		public int valideDemande(@RequestParam("id") Long id) {
+    		
+    		Appuser manager=userdao.findOne(id);
+    			createDirectoryService.CreateDirectory("entreprise/"+manager.getNomEntreprise()+"/offres");
+			createDirectoryService.CreateDirectory("entreprise/"+manager.getNomEntreprise()+"/profile");
+    		
+		return accountService.valideCompteManager(id);	
+		}
+    	
+    	
+    	
+    	
+@RequestMapping(value="admin/refuseDemande", method = RequestMethod.GET)
+    	
+		public void refuseDemande(@RequestParam("id") Long id) {
+		 userdao.delete(id);	
+		}
+    	
+    	
     	
     	
 }

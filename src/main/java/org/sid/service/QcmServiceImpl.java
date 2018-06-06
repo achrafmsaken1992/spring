@@ -48,6 +48,8 @@ public class QcmServiceImpl implements QcmService{
 	private UserRepository userRepository;
     @Autowired
     private NoteRepository noteRpository;
+    
+
 	public QcmRepository getQcmRepository() {
 		return qcmRepository;
 	}
@@ -250,5 +252,20 @@ return noteRpository.save(note).getId();
 		return qcmRepository.getQcmsByOffresManager(id);
 	}
 	
-	
+	@Override
+	public int isQcmManager(Long id,Long manager) {
+		int res=0;
+		// TODO Auto-generated method stub
+		if(qcmRepository.qcmManager(id,manager)>0)
+			res=1;
+		return res;
+	}
+	@Override
+	public int isQuestionManager(Long id, Long manager) {
+		int res=0;
+		// TODO Auto-generated method stub
+		if(questionRepository.questionManager(id,manager)>0)
+			res=1;
+		return res;
+	}
 }

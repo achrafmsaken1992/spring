@@ -33,5 +33,6 @@ public interface EtudiantService {
 	public void deleteFormation(Long id);
 	public void updateFormation(FormationForm formationForm);
 	public List<Appuser>getEtudiantMessagerie(String mot);
-	
+	public List<String>getTitreCompetances();
+	public void updateResume(Long id, String resume);
 }

@@ -20,4 +20,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long>{
 	
 	@Query("select count(q) from Question q where q.qcm.id=:qcm  and (count(q.suggestions)>=1)")
 	public Long nbrQuestions(@Param("qcm") Long qcm);
+	@Query("select count(*) from Question q where q.id=:id and q.qcm.offre.manager.id=:u")
+	public int questionManager(@Param("id")Long id,@Param("u")Long u );
 }

@@ -47,10 +47,13 @@ public class FcmPushTest {
 
         info.put("body",body); // Notification body
         info.put("icon",image);
-        infoData.put("body",idDemande.toString());
+        info.put("click_action",  "http://localhost:4200/messagerie-etudiant/"+idDemande.toString());
+        
+        //infoData.put("body",idDemande.toString());
         //info.put("title", "Demande de course");
         json.put("notification", info);
         json.put("data",infoData);
+        
 
         //System.out.println("***************************************************" + idDemande);
         /*

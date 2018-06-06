@@ -13,6 +13,7 @@ import org.sid.service.AccountService;
 import org.sid.service.CreateDirectoryService;
 import org.sid.service.EtudiantService;
 import org.sid.service.OffreService;
+import org.sid.service.QcmService;
 import org.sid.service.SendmailService;
 import org.sid.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ CreateDirectoryService createDirectoryService;
 @Autowired 
 OffreService offreService;
 	@Autowired
-	
+	QcmService qcmService;
 	@Value("${gmail.username}")
 	private String username;
 	@Value("${gmail.password}")
@@ -230,6 +231,67 @@ OffreService offreService;
 			
 			
 	   }
+		@RequestMapping(value="manager/isOffreManager",method=RequestMethod.GET)
+		public int isOffre(@RequestParam(name="id")Long id) {
+			int res=0;
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String loggedUsername = auth.getName();
+			Appuser user=userdao.findUserByEmail(loggedUsername);
+			Long manager=user.getId();
+			
+			if(offreService.manegerOffre(id, manager)>0)
+			res=1;
+			return res;
+			
+		}
+	
+		
+		
+		
+		
+		
+	
+		@RequestMapping(value="manager/isQcmManager",method=RequestMethod.GET)
+		public int isQcmManager(@RequestParam(name="id")Long id) {
+			int res=0;
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String loggedUsername = auth.getName();
+			Appuser user=userdao.findUserByEmail(loggedUsername);
+			Long manager=user.getId();
+			
+			if(offreService.manegerOffre(id, manager)>0)
+			res=1;
+			return res;
+			
+		}
+		@RequestMapping(value="manager/isQuestionManager",method=RequestMethod.GET)
+		public int isQuestionManager(@RequestParam(name="id")Long id) {
+			int res=0;
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String loggedUsername = auth.getName();
+			Appuser user=userdao.findUserByEmail(loggedUsername);
+			Long manager=user.getId();
+			
+			if(qcmService.isQcmManager(id, manager)>0)
+			res=1;
+			return res;
+			
+		}
+		@RequestMapping(value="getTitreCompetances",method=RequestMethod.GET)
+		public List<String> getTitreCompetances(){
+			return etudiantService.getTitreCompetances();
+			
+		}
+		@RequestMapping(value="etudiant/updateResume",method=RequestMethod.GET)
+		public void updateResume(@RequestParam(name="resume")String resume){
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String loggedUsername = auth.getName();
+			Appuser user=userdao.findUserByEmail(loggedUsername);
+			Long id=user.getId();
+		etudiantService.updateResume(id, resume);
+			//
+		}
+		
 		
    }
 	

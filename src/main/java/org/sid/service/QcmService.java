@@ -44,5 +44,7 @@ public int meuilleurNote(Long qcm);
 public int plusMauvaisNote(Long qcm);
 public Qcm findQcmById(Long qcm);
 public Long nbrParticipantsReussis(Long qcm);
+int isQcmManager(Long id,Long manager);
+int isQuestionManager(Long id,Long manager);
 
 }

@@ -10,4 +10,5 @@ public interface OffreService {
 public Long addOffre(Offre offre);
 public Page<Offre> getOffreByManager(Long id,String mot,int active, Pageable pageable);
 public Page<Offre> getAllOffres(String mot, Pageable pageable);
+public int manegerOffre(Long id,Long manager);
 }

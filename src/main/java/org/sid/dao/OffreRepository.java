@@ -17,4 +17,11 @@ public interface OffreRepository extends JpaRepository<Offre,Long>{
 	
 	@Query("select o from Offre o where active=1 and (o.titre like :mot or o.description like :mot) ORDER BY o.date DESC")
 	public Page<Offre> findAllOffres(@Param("mot")String mot,Pageable pageable );
+	
+	@Query("select count(*) from Offre o where o.id=:id and o.manager.id=:u")
+	public int isOffreManager(@Param("id")Long id,@Param("u")Long u );
+
+
+
+
 }

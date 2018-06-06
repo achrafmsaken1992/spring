@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class Appuser implements Serializable{
 	
 
-
+	@Id @GeneratedValue
+	 Long id;
 
 	String nom;
 	 String email;
@@ -48,19 +50,47 @@ public class Appuser implements Serializable{
 	 String nomEntreprise;
 	 String token;
 	 String tokenExpiration;
+	 String tokenRecovery;
+	String  dateExpiration;
 	String DateNaissance;
 	String tel;
 	String image;
 	String cin;
 	 String tokenNotification;
-	@Id @GeneratedValue
-	 Long id;
-	 @ManyToMany(fetch=FetchType.EAGER)
-		private Collection<AppRole> roles=new ArrayList<>();
 	 @ColumnDefault("0")
 	 private int active;
-	 @ColumnDefault("0")
-	 private int valide;
+	 @Column( length=512)
+	 String resume;
+	 public String getResume() {
+		return resume;
+	}
+	public void setResume(String resume) {
+		this.resume = resume;
+	}
+
+
+
+
+	public int valide;
+	public String getTokenRecovery() {
+		return tokenRecovery;
+	}
+	public void setTokenRecovery(String tokenRecovery) {
+		this.tokenRecovery = tokenRecovery;
+	}
+	public String getDateExpiration() {
+		return dateExpiration;
+	}
+	public void setDateExpiration(String dateExpiration) {
+		this.dateExpiration = dateExpiration;
+	}
+
+
+	
+	
+	 @ManyToMany(fetch=FetchType.EAGER)
+		private Collection<AppRole> roles=new ArrayList<>();
+	
 	 @OneToMany(mappedBy="manager",cascade=javax.persistence.CascadeType.REMOVE)
 	 private Collection<Offre> offres;
 	 @OneToMany(mappedBy="etudiant",cascade=javax.persistence.CascadeType.REMOVE)

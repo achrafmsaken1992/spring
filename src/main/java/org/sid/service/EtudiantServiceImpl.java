@@ -134,7 +134,16 @@ public class EtudiantServiceImpl implements EtudiantService{
 		// TODO Auto-generated method stub
 		return userRepository.getEtudiantMessagerie(mot);
 	}
-
+	@Override
+	public List<String> getTitreCompetances() {
+		// TODO Auto-generated method stub
+		return competanceRepository.getCompetances();
+	}
+	@Override
+	public void updateResume(Long id, String resume) {
+		this.userRepository.updateResume(resume, id);
+		
+	}
 	
 
 }

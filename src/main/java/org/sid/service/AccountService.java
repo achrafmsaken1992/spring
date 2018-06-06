@@ -31,4 +31,9 @@ public void updateImage(String image,Long id);
 public List<Messagerie> messageries(Long user1,Long user2);
 public void addMessagerie(MessagerieForm messagerieForm);
 public Page<Messagerie> getMessageriesCall(Long user,Pageable pageable);
+void recoveryPassword(String tokenRecovery, String dateExpiration, Long id);
+public Appuser findByTokenRecovery(String token);
+public int valideCompteManager(Long id);
+public void updateResume(Long id,String resume);
+
 }
