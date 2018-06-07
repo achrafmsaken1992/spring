@@ -35,5 +35,7 @@ void recoveryPassword(String tokenRecovery, String dateExpiration, Long id);
 public Appuser findByTokenRecovery(String token);
 public int valideCompteManager(Long id);
 public void updateResume(Long id,String resume);
-
+public Page<Appuser>RechEtudiant(String nom,String prenom,String langue,
+		String competance,String experience,String formation,
+		int active,int valide,Pageable pageable);
 }

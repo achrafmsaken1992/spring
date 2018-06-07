@@ -29,7 +29,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import org.springframework.data.domain.Page;
 
 
 
@@ -174,6 +174,13 @@ Appuser appUser=userRepository.findUserByEmail(username);
 			public void updateResume(Long id, String resume) {
 				//this.userRepository.updateResume(resume, id);
 				
+			}
+
+			@Override
+			public Page<Appuser> RechEtudiant(String nom, String prenom, String langue, String competance,
+					String experience, String formation, int active, int valide, Pageable pageable) {
+				// TODO Auto-generated method stub
+				return userRepository.RechEtudiant(nom, prenom, langue, competance, experience, formation, active, valide, pageable);
 			}
 		
 

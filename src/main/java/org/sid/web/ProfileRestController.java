@@ -161,7 +161,22 @@ public class ProfileRestController {
 		etudiantService.updateFormation(formationForm);
 	}
 	
+	@RequestMapping(value="/getEtudiants",method=RequestMethod.GET)
+	public Page<Appuser> getManagers(
+			@RequestParam(name="nom",defaultValue="")	String nom,
+			@RequestParam(name="prenom",defaultValue="")	String prenom,
+			@RequestParam(name="langue",defaultValue="")	String langue,
+			@RequestParam(name="formation",defaultValue="")	String formation,
+			@RequestParam(name="competance",defaultValue="")	String competance,
+			@RequestParam(name="experience",defaultValue="")	String experience,
+			
+			@RequestParam(name="page",defaultValue="0")	int page,
+			@RequestParam(name="size",defaultValue="5")	int size)
+   {
+		
 
+		return accountService.RechEtudiant("%"+nom+"%","%"+prenom+"%", "%"+langue+"%", "%"+competance+"%","%"+ experience+"%", "%"+formation+"%", 1, 1, new PageRequest(page, size));
 	
 	
+}
 }

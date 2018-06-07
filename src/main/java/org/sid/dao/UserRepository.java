@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 public interface UserRepository extends JpaRepository<Appuser, Long>{
@@ -74,6 +75,21 @@ public interface UserRepository extends JpaRepository<Appuser, Long>{
 	public Appuser findByTokenRecovery(String token);
 	
 
+	@Query("select c from Appuser c,AppRole r,Language l,Competance comp,Experience exp,Formation for where c.nom like :nom and c.prenom like :prenom "
+	+" and c.active=:active and c.valide=:valide "
+	+" and l.nom like :la and l  MEMBER OF  c.langue"
+	+" and comp.name like :co and comp  MEMBER OF  c.competance "
+	+" and ((exp.description like :ex) or (exp.motCle like :ex)) and exp  MEMBER OF  c.experience "
+	+" and (for.section like :fo  or for.specialite like :fo) and for  MEMBER OF  c.formation "
+	+" and r.roleName='ETUDIANT' and r  MEMBER OF  c.roles")
+	 public Page<Appuser> RechEtudiant(@Param("nom")String nom,@Param("prenom")String prenom,
+			@Param("la")String langue,
+			@Param("co")String competance,
+			@Param("ex")String experience,
+			@Param("fo")String formation,
+	@Param("active")int active,@Param("valide")int valide,Pageable pageable);
+			
+	
 
 
 }
