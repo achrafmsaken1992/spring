@@ -161,7 +161,7 @@ public class ProfileRestController {
 		etudiantService.updateFormation(formationForm);
 	}
 	
-	@RequestMapping(value="/getEtudiants",method=RequestMethod.GET)
+	@RequestMapping(value="/rechEtudiants",method=RequestMethod.GET)
 	public Page<Appuser> getManagers(
 			@RequestParam(name="nom",defaultValue="")	String nom,
 			@RequestParam(name="prenom",defaultValue="")	String prenom,

@@ -75,13 +75,13 @@ public interface UserRepository extends JpaRepository<Appuser, Long>{
 	public Appuser findByTokenRecovery(String token);
 	
 
-	@Query("select c from Appuser c,AppRole r,Language l,Competance comp,Experience exp,Formation for where c.nom like :nom and c.prenom like :prenom "
+	@Query("select distinct c from Appuser c,AppRole r,Language l,Competance comp,Experience exp,Formation for where c.nom like :nom and c.prenom like :prenom "
 	+" and c.active=:active and c.valide=:valide "
-	+" and l.nom like :la and l  MEMBER OF  c.langue"
-	+" and comp.name like :co and comp  MEMBER OF  c.competance "
-	+" and ((exp.description like :ex) or (exp.motCle like :ex)) and exp  MEMBER OF  c.experience "
-	+" and (for.section like :fo  or for.specialite like :fo) and for  MEMBER OF  c.formation "
-	+" and r.roleName='ETUDIANT' and r  MEMBER OF  c.roles")
+	+" and ((l.nom like :la and l  MEMBER OF  c.langue) or (c.langue IS EMPTY and :la='%%'))"
+	+" and ((comp.name like :co and comp  MEMBER OF  c.competance) or (c.competance IS EMPTY and :co='%%')) "
+	+" and ((((exp.description like :ex) or (exp.motCle like :ex)) and exp  MEMBER OF  c.experience) or (c.experience  IS EMPTY and :ex='%%')) "
+	+" and (((for.section like :fo  or for.specialite like :fo) and for  MEMBER OF  c.formation) or (c.formation IS EMPTY and :fo='%%')) "
+	+" and r.roleName='ETUDIANT' and r  MEMBER OF  c.roles and active =:active and valide =:valide")
 	 public Page<Appuser> RechEtudiant(@Param("nom")String nom,@Param("prenom")String prenom,
 			@Param("la")String langue,
 			@Param("co")String competance,
