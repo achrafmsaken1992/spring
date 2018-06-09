@@ -43,6 +43,20 @@ public class OffreServiceImpl implements OffreService{
 			res=1;
 		return res;
 	}
+	@Override
+	public void supprimerOffre(Long id) {
+		offreRepository.delete(id);
+		
+	}
+	@Override
+	public void modifierOffre(OffreForm offreForm) {
+		Offre offre=offreRepository.findOne(offreForm.getId());
+		offre.setTitre(offreForm.getTitre());
+		offre.setDescription(offreForm.getDescription());
+		offreRepository.save(offre);
+		
+	}
+
 	
 
 }

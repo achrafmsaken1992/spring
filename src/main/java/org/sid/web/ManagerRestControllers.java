@@ -3,6 +3,7 @@ package org.sid.web;
 import java.util.Date;
 import java.util.List;
 
+import org.sid.dao.OffreRepository;
 import org.sid.dao.UserRepository;
 
 import org.sid.entities.Appuser;
@@ -61,6 +62,9 @@ public class ManagerRestControllers {
 CreateDirectoryService createDirectoryService;
 @Autowired 
 OffreService offreService;
+@Autowired 
+OffreRepository offreRepository;
+
 	@Autowired
 	QcmService qcmService;
 	@Value("${gmail.username}")
@@ -124,6 +128,12 @@ OffreService offreService;
 			
 			String path="upload-dir/entreprise/"+user.getNomEntreprise()+"/offres/"+id.toString();
 			try {
+				
+				
+				createDirectoryService.CreateDirectory("entreprise/"+user.getNomEntreprise()+"/offres/"+id.toString());
+				Offre offre=offreRepository.findOne(id);
+				offre.setImage( file.getOriginalFilename());
+				offreService.addOffre(offre);
 			   storageService.store(file,path);
 	           
 	  
@@ -292,7 +302,16 @@ OffreService offreService;
 			//
 		}
 		
-		
+		@PostMapping("/manager/deleteOffre")
+		public void supprimerOffre(@RequestBody Long id) {
+			offreService.supprimerOffre(id);
+			
+		}
+		@PostMapping("/manager/updateOffre")
+		public void modifierOffre(@RequestBody OffreForm offreForm) {
+			offreService.modifierOffre(offreForm);
+			
+		}
    }
 	
 	

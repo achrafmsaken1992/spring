@@ -1,7 +1,14 @@
 package org.sid.form;
 
 public class OffreForm {
+	Long id;
 String titre;
+public Long getId() {
+	return id;
+}
+public void setId(Long id) {
+	this.id = id;
+}
 String description;
 String image;
 
