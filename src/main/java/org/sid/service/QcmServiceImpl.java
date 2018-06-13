@@ -268,4 +268,9 @@ return noteRpository.save(note).getId();
 			res=1;
 		return res;
 	}
+	@Override
+	public Long nbrQuestionsByQcm(Long id) {
+		// TODO Auto-generated method stub
+		return questionRepository.nbrQuestions(id);
+	}
 }

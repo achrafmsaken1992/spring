@@ -23,7 +23,17 @@ public class Experience {
 	private String date2;
 	private String titre;
 	private String motCle;
-  	public String getEntreprise() {
+  	public String getMotCle() {
+		return motCle;
+	}
+
+
+	public void setMotCle(String motCle) {
+		this.motCle = motCle;
+	}
+
+
+	public String getEntreprise() {
 		return entreprise;
 	}
 

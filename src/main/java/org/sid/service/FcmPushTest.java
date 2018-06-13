@@ -24,7 +24,7 @@ public class FcmPushTest {
     public final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
 
     
-    public static String pushFCMNotificationToOneUser(String putIds2/*, DemandeRequestDTO demandeRequestDTO*/, Long idDemande,String image,String body)
+    public static String pushFCMNotificationToOneUser(String putIds2/*, DemandeRequestDTO demandeRequestDTO*/, Long idDemande,String image,String role,String body)
             throws Exception {
         String authKey = AUTH_KEY_FCM; // You FCM AUTH key
         String FMCurl = API_URL_FCM;
@@ -47,8 +47,12 @@ public class FcmPushTest {
 
         info.put("body",body); // Notification body
         info.put("icon",image);
+        if(role.equalsIgnoreCase("etudiant"))
         info.put("click_action",  "http://localhost:4200/messagerie-etudiant/"+idDemande.toString());
-        
+        else
+        {
+        	info.put("click_action",  "http://localhost:4200/messagerie-manager/"+idDemande.toString());
+        }
         //infoData.put("body",idDemande.toString());
         //info.put("title", "Demande de course");
         json.put("notification", info);

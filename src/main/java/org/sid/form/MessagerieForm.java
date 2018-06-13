@@ -5,7 +5,14 @@ public class MessagerieForm {
 String message;
 Long user1;
 Long user2;
+String role;
 String image;
+public String getRole() {
+	return role;
+}
+public void setRole(String role) {
+	this.role = role;
+}
 String body;
 public String getBody() {
 	return body;

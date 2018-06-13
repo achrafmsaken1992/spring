@@ -61,6 +61,7 @@ public class EtudiantServiceImpl implements EtudiantService{
 		experience.setDate2(experienceForm.getDate2());
 		experience.setDescription(experienceForm.getDescription());
 		experience.setEntreprise(experienceForm.getEntreprise());
+		experience.setMotCle(experienceForm.getMotCle());
 	
 		experience.setTitre(experienceForm.getTitre());
 		

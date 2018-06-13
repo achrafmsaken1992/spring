@@ -260,5 +260,11 @@ public class QcmRestController {
 		
 	}
 	
+	@RequestMapping(value="/nbrQuestionsByQcm",method=RequestMethod.GET)
+	public Long nbrQuestionsByOffre(@RequestParam(name="id")	Long id) 
+	{
+	return qcmService.nbrQuestionsByQcm(id);	
+	}
+	
 	
 }

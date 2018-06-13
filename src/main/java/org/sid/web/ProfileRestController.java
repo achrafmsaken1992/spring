@@ -55,6 +55,7 @@ public class ProfileRestController {
 		experience.setLieu(experienceForm.getLieu());
 		experience.setDescription(experienceForm.getDescription());
 		experience.setTitre(experienceForm.getTitre());
+		experience.setMotCle(experienceForm.getMotCle());
 		etudiantService.addExperience(experience);
 		
 	}

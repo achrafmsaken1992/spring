@@ -216,7 +216,7 @@ appUser.setToken(uuid);
     	public void addMessage(@RequestBody MessagerieForm messagerie) {
     		
     		try {
-                String response= FcmPushTest.pushFCMNotificationToOneUser(userdao.getOne(messagerie.getUser2()).getTokenNotification(),messagerie.getUser1(),messagerie.getImage(),messagerie.getBody());
+                String response= FcmPushTest.pushFCMNotificationToOneUser(userdao.getOne(messagerie.getUser2()).getTokenNotification(),messagerie.getUser1(),messagerie.getImage(),messagerie.getRole(),messagerie.getBody());
                 System.out.println("firebase response server :: "+response);
             }
     		
