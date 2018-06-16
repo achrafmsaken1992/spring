@@ -14,4 +14,5 @@ public void modifierOffre(OffreForm offreForm);
 public Page<Offre> getOffreByManager(Long id,String mot,int active, Pageable pageable);
 public Page<Offre> getAllOffres(String mot, Pageable pageable);
 public int manegerOffre(Long id,Long manager);
+public Long nbrOffres(Long id);
 }

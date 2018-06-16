@@ -124,7 +124,7 @@ accountService.saveUser(appUser);
 					
 				
 					createDirectoryService.CreateDirectory("/etudiant/"+appUser.getId()+"/image");
-				
+					createDirectoryService.CreateDirectory("/etudiant/"+appUser.getId()+"/cv");
 
 			} catch (MessagingException e) {
 				//e.printStackTrace();
@@ -212,7 +212,30 @@ accountService.saveUser(appUser);
 		}
 		
 	}
-	
+	@PostMapping("/etudiant/uploadCv")
+	public ResponseEntity<String> CvEtudiant(@RequestParam("file") MultipartFile file) {
+		String message = "";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String loggedUsername = auth.getName();
+		
+		Appuser user=userdao.findUserByEmail(loggedUsername);
+		
+		String path="upload-dir/etudiant/"+user.getId()+"/cv/";
+		try {
+		   storageService.store(file,path);
+           etudiantService.updateCv(file.getOriginalFilename(), user.getId());
+		  
+			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
+			
+			
+			
+			return ResponseEntity.status(HttpStatus.OK).body(message);
+		} catch (Exception e) {
+			message = "FAIL to upload " + file.getOriginalFilename() + "!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+		}
+		
+	}
 	@GetMapping("/getPhotoEtudiant/{filename}/{id}")
 	@ResponseBody
 	public ResponseEntity<Resource> getFile(@PathVariable("filename") String filename,@PathVariable("id") String id) {
@@ -224,6 +247,25 @@ accountService.saveUser(appUser);
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
 	}
+	
+	@GetMapping("/getCvEtudiant/{filename}/{id}")
+	@ResponseBody
+	public ResponseEntity<Resource> getCv(@PathVariable("filename") String filename,@PathVariable("id") String id) {
+		
+		
+		String path="upload-dir/etudiant/"+id+"/cv/";
+		Resource file = storageService.loadFile(filename,path);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+				.body(file);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value="/etudiant/getManagers",method=RequestMethod.GET)
 	public List<Appuser> getManagers(

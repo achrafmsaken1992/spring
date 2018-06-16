@@ -38,4 +38,8 @@ public void updateResume(Long id,String resume);
 public Page<Appuser>RechEtudiant(String nom,String prenom,String langue,
 		String competance,String experience,String formation,
 		int active,int valide,Pageable pageable);
+public void deleteMessage(Long id);
+public Long nbrMessagesRecu(Long id);
+public Long nbrMessagesEnvoye(Long id);
+public Long nbrEntreprises(Long id);
 }

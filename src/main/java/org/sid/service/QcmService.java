@@ -44,8 +44,10 @@ public int meuilleurNote(Long qcm);
 public int plusMauvaisNote(Long qcm);
 public Qcm findQcmById(Long qcm);
 public Long nbrParticipantsReussis(Long qcm);
-int isQcmManager(Long id,Long manager);
-int isQuestionManager(Long id,Long manager);
-Long nbrQuestionsByQcm(Long id);
+public int isQcmManager(Long id,Long manager);
+public int isQuestionManager(Long id,Long manager);
+public Long nbrQuestionsByQcm(Long id);
+public Long nbrQuizs(Long id);
+public Long nbrQuizsrepondus(Long id);
 
 }

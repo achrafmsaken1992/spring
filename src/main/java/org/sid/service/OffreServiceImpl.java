@@ -56,6 +56,11 @@ public class OffreServiceImpl implements OffreService{
 		offreRepository.save(offre);
 		
 	}
+	@Override
+	public Long nbrOffres(Long id) {
+		// TODO Auto-generated method stub
+		return offreRepository.NbrOffres();
+	}
 
 	
 

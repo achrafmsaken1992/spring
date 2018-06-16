@@ -182,6 +182,31 @@ Appuser appUser=userRepository.findUserByEmail(username);
 				// TODO Auto-generated method stub
 				return userRepository.RechEtudiant(nom, prenom, langue, competance, experience, formation, active, valide, pageable);
 			}
+
+			@Override
+			public void deleteMessage(Long id) {
+				messagerieRepository.delete(id);
+				
+			}
+
+			@Override
+			public Long nbrMessagesRecu(Long id) {
+				// TODO Auto-generated method stub
+				return messagerieRepository.nbrMessageriesRecu(id);
+			}
+
+			@Override
+			public Long nbrMessagesEnvoye(Long id) {
+				// TODO Auto-generated method stub
+			 return messagerieRepository.nbrMessageriesEnvoye(id);
+			}
+
+			@Override
+			public Long nbrEntreprises(Long id) {
+				// TODO Auto-generated method stub
+				return userRepository.nbrManager();
+			}
+			
 		
 
 

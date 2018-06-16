@@ -35,4 +35,6 @@ public interface EtudiantService {
 	public List<Appuser>getEtudiantMessagerie(String mot);
 	public List<String>getTitreCompetances();
 	public void updateResume(Long id, String resume);
+	public List<String>getLangues();
+	public void updateCv(String cv,Long id);
 }

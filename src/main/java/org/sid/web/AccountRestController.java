@@ -21,6 +21,7 @@ import org.sid.entities.AppRole;
 import org.sid.entities.Appuser;
 import org.sid.entities.Messagerie;
 import org.sid.form.ActiveAccount;
+import org.sid.form.ContactForm;
 import org.sid.form.EmailMessages;
 import org.sid.form.ForgetPasswordForm;
 import org.sid.form.MessagerieForm;
@@ -29,6 +30,8 @@ import org.sid.form.UpdatePasswordForm;
 import org.sid.service.AccountService;
 import org.sid.service.CreateDirectoryService;
 import org.sid.service.FcmPushTest;
+import org.sid.service.OffreService;
+import org.sid.service.QcmService;
 import org.sid.service.SendmailService;
 import org.sid.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +69,10 @@ public class AccountRestController {
 	StorageService storageService;
 	@Autowired
 	SendmailService sendMail;
+	@Autowired
+	OffreService offreService;
+	@Autowired
+	QcmService qcmService;
 @Autowired
 CreateDirectoryService createDirectoryService;
 	
@@ -275,11 +282,11 @@ appUser.setToken(uuid);
 			
 		}
     	
-    	@RequestMapping(value="isActive",method = RequestMethod.GET)
-    	public Appuser isActive(
+    	@RequestMapping(value="isActiveAndValide",method = RequestMethod.GET)
+    	public Appuser isActiveAndValide(
     		@RequestParam(name="email")	String email) {
     	if(userdao.findUserByEmail(email).getActive()==0)throw new RuntimeException("erreur1");
-    		
+    	if(userdao.findUserByEmail(email).getValide()==0)throw new RuntimeException("erreur2");
 				return userdao.findUserByEmail(email);
     	
 				
@@ -453,8 +460,89 @@ appUser.setToken(uuid);
 		public void refuseDemande(@RequestParam("id") Long id) {
 		 userdao.delete(id);	
 		}
-    	
-    	
-    	
-    	
+@PostMapping("/envoyerContact")
+public void envoyerContact(@RequestBody ContactForm contactForm) {
+	EmailMessages em = new EmailMessages();
+	em.setBody("commentaire cvthec Iset Sousse<br> "+"Nom et Prenom:"+contactForm.getNp()+"<br>email: "+contactForm.getEmail()+"<br>"+
+	"commentaire:"+contactForm.getCommentaire());
+	em.setTo_address("achraf.ben.abdeljalil@gmail.com");
+	em.setSubject("commentaire cvthec Iset Sousse");
+	
+
+		try {
+			sendMail.sendmail(em,username,password);
+			
+
+			
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+}
+
+@PostMapping("/admin/supprimerEtudiant")
+public void supprimerEtudiant(@RequestBody Long id) {
+	String email=userdao.findOne(id).getEmail();
+	userdao.delete(id);
+	EmailMessages em = new EmailMessages();
+	em.setBody("Votre compte chez cvthec Iset Sousse a été supprimé");
+	em.setTo_address(email);
+	em.setSubject("Suppression Compte cvthec Iset Sousse");
+	
+
+		try {
+			sendMail.sendmail(em,username,password);
+			
+
+			
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+}
+
+
+@PostMapping("/supprimerMessage")
+public void supprimerOffre(@RequestBody Long id) {
+	accountService.deleteMessage(id);
+	
+}
+@RequestMapping(value="/nbrMessageRecu",method=RequestMethod.GET)
+public Long nbrMessageRecu(@RequestParam(name="id")	Long id) 
+{
+return accountService.nbrMessagesRecu(id);	
+}
+@RequestMapping(value="/nbrMessageEnvoye",method=RequestMethod.GET)
+public Long nbrMessageEnvoye(@RequestParam(name="id")	Long id) 
+{
+return accountService.nbrMessagesEnvoye(id);	
+}   	
+@RequestMapping(value="/nbrOffres",method=RequestMethod.GET)
+public Long nbrOffres(@RequestParam(name="id")	Long id) 
+{
+return offreService.nbrOffres(id);	
+} 
+@RequestMapping(value="/nbrQuizs",method=RequestMethod.GET)
+public Long nbrQuizs(@RequestParam(name="id")	Long id) 
+{
+return qcmService.nbrQuizs(id);
+} 
+@RequestMapping(value="/nbrQuizs",method=RequestMethod.GET)
+public Long nbrQuizsRepondus(@RequestParam(name="id")	Long id) 
+{
+return qcmService.nbrQuizs(id);
+} 
+@RequestMapping(value="/nbrEntreprises",method=RequestMethod.GET)
+public Long nbrEntreprises() 
+{
+return userdao.nbrManager();
+}    	
 }

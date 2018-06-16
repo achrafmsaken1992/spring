@@ -18,6 +18,11 @@ public interface MessagerieRepository extends JpaRepository<Messagerie,Long>{
 	
 	@Query("select m from Messagerie m where m.user2.id=:u order by date desc")
 	public Page<Messagerie> getMessageriesCall(@Param("u")Long user,Pageable pageable);
-
+	
+	@Query("select count(*) from Messagerie m where m.user2.id=:u")
+	public Long nbrMessageriesRecu(@Param("u")Long user);
+	
+	@Query("select count(*) from Messagerie m where m.user1.id=:u")
+	public Long nbrMessageriesEnvoye(@Param("u")Long user);
 
 }

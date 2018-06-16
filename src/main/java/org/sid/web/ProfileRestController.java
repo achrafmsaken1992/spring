@@ -1,5 +1,7 @@
 package org.sid.web;
 
+import java.util.List;
+
 import org.sid.dao.FormationRepository;
 import org.sid.dao.UserRepository;
 import org.sid.entities.Appuser;
@@ -180,4 +182,16 @@ public class ProfileRestController {
 	
 	
 }
+	@RequestMapping(value="/getLangues",method=RequestMethod.GET)
+	public List<String> getLangues()
+			
+   {
+		
+	
+		return etudiantService.getLangues();
+		
+		
+   }
+	
+	
 }

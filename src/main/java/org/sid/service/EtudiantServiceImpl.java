@@ -25,7 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 @Service
 @Transactional
-public class EtudiantServiceImpl implements EtudiantService{
+public  class EtudiantServiceImpl implements EtudiantService{
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -143,6 +143,16 @@ public class EtudiantServiceImpl implements EtudiantService{
 	@Override
 	public void updateResume(Long id, String resume) {
 		this.userRepository.updateResume(resume, id);
+		
+	}
+	@Override
+	public List<String> getLangues() {
+		// TODO Auto-generated method stub
+		return langueRepository.getLangues();
+	}
+	@Override
+	public void updateCv(String cv, Long id) {
+		userRepository.updateCv(cv, id);
 		
 	}
 	

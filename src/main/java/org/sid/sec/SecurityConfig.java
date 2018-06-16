@@ -51,7 +51,7 @@ private BCryptPasswordEncoder  bCryptPasswordEncoder ;
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 
-		http.authorizeRequests().antMatchers("/register/**","/login/**","/activationCompte/**","/getPhotoOffreByManager/**","/getPhotoEtudiant/**","/getPhotoManager/**","/updateTokenNotification/**","/isActive/**","/recoveryPassword/**","/updateAuthentification/**").permitAll();
+		http.authorizeRequests().antMatchers("/register/**","/login/**","/activationCompte/**","/getPhotoOffreByManager/**","/getPhotoEtudiant/**","/getPhotoManager/**","/updateTokenNotification/**","/isActiveAndValide/**","/recoveryPassword/**","/updateAuthentification/**","/envoyerContact/**","/getCvEtudiant/**").permitAll();
 		
 		//swagger link authorized
 		http.authorizeRequests().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",

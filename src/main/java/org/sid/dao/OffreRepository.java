@@ -21,7 +21,8 @@ public interface OffreRepository extends JpaRepository<Offre,Long>{
 	@Query("select count(*) from Offre o where o.id=:id and o.manager.id=:u")
 	public int isOffreManager(@Param("id")Long id,@Param("u")Long u );
 
-
+	@Query("select count(*) from Offre o")
+	public Long NbrOffres( );
 
 
 }

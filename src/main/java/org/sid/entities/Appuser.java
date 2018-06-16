@@ -61,7 +61,14 @@ public class Appuser implements Serializable{
 	 private int active;
 	 @Column( length=512)
 	 String resume;
-	 public String getResume() {
+	 private String cv;
+	 public String getCv() {
+		return cv;
+	}
+	public void setCv(String cv) {
+		this.cv = cv;
+	}
+	public String getResume() {
 		return resume;
 	}
 	public void setResume(String resume) {

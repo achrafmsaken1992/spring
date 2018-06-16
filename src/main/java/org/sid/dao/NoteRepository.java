@@ -35,7 +35,8 @@ public double plusMauvaisNote(@Param("qcm") Long qcm);
 @Query("select count(*) from Note n where n.qcm.id=:qcm and (n.reponseCorrect/(n.reponseFausse+n.reponseCorrect))>=0.5  ")
 public Long nbrParticipantsReussis(@Param("qcm")Long qcm);
 
-
+@Query("select count(*) from Note n where n.etudiant.id=:id   ")
+public Long nbrQuizsEtudiant(@Param("id")Long id);
 }
 
 

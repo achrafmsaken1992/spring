@@ -273,4 +273,14 @@ return noteRpository.save(note).getId();
 		// TODO Auto-generated method stub
 		return questionRepository.nbrQuestions(id);
 	}
+	@Override
+	public Long nbrQuizs(Long id) {
+		// TODO Auto-generated method stub
+		return qcmRepository.nbrQuizs();
+	}
+	@Override
+	public Long nbrQuizsrepondus(Long id) {
+		// TODO Auto-generated method stub
+		return noteRpository.nbrQuizsEtudiant(id);
+	}
 }
