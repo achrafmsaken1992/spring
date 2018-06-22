@@ -229,7 +229,7 @@ return noteRpository.save(note).getId();
 	@Override
 	public int meuilleurNote(Long qcm) {
 		// TODO Auto-generated method stub
-		return (int)noteRpository.plusMauvaisNote(qcm);
+		return (int)noteRpository.meuilleurNote(qcm);
 	}
 	@Override
 	public int plusMauvaisNote(Long qcm) {
@@ -274,7 +274,7 @@ return noteRpository.save(note).getId();
 		return questionRepository.nbrQuestions(id);
 	}
 	@Override
-	public Long nbrQuizs(Long id) {
+	public Long nbrQuizs() {
 		// TODO Auto-generated method stub
 		return qcmRepository.nbrQuizs();
 	}
@@ -283,4 +283,45 @@ return noteRpository.save(note).getId();
 		// TODO Auto-generated method stub
 		return noteRpository.nbrQuizsEtudiant(id);
 	}
+	@Override
+	public Long nbrQuizsManager(Long id) {
+		// TODO Auto-generated method stub
+		return qcmRepository.nbrQuizsManager(id);
+	}
+	@Override
+	public Long nbrReps(Long id) {
+		// TODO Auto-generated method stub
+		return noteRpository.nbrRepQuizsManager(id);
+	}
+	@Override
+	public Long nbrSuggestionsByQuestion(Long id) {
+		// TODO Auto-generated method stub
+		return suggestionRepository.nbrSuggestions(id);
+	}
+	@Override
+	public Long nbrQuizOffre(Long id) {
+		// TODO Auto-generated method stub
+		return qcmRepository.nbrQuizsOffre(id);
+	}
+	@Override
+	public Long nbrRepCorrect() {
+		// TODO Auto-generated method stub
+		return noteRpository.nbrRepCorrect();
+	}
+	@Override
+	public Long nbrRepFausse() {
+		// TODO Auto-generated method stub
+		return noteRpository.nbrRepFausse();
+	}
+	@Override
+	public Long nbrMoyenne() {
+		// TODO Auto-generated method stub
+		return noteRpository.nbrMoyenne();
+	}
+	@Override
+	public Long nbrRed() {
+		// TODO Auto-generated method stub
+		return noteRpository.nbrRed();
+	}
+	
 }

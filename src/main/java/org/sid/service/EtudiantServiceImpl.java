@@ -15,6 +15,7 @@ import org.sid.entities.Experience;
 import org.sid.entities.Formation;
 import org.sid.entities.Language;
 import org.sid.form.CompetanceForm;
+import org.sid.form.CompetanceStat;
 import org.sid.form.EtudiantForm;
 import org.sid.form.ExperienceForm;
 import org.sid.form.FormationForm;
@@ -154,6 +155,11 @@ public  class EtudiantServiceImpl implements EtudiantService{
 	public void updateCv(String cv, Long id) {
 		userRepository.updateCv(cv, id);
 		
+	}
+	@Override
+	public List<CompetanceStat> competanceStat() {
+		// TODO Auto-generated method stub
+		return competanceRepository.competanceStat();
 	}
 	
 

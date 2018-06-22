@@ -8,6 +8,7 @@ import org.sid.dao.OffreRepository;
 import org.sid.dao.QcmRepository;
 import org.sid.entities.Offre;
 import org.sid.form.OffreForm;
+import org.sid.form.OffreStat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,10 +58,22 @@ public class OffreServiceImpl implements OffreService{
 		
 	}
 	@Override
-	public Long nbrOffres(Long id) {
+	public Long nbrOffres() {
 		// TODO Auto-generated method stub
 		return offreRepository.NbrOffres();
 	}
+	@Override
+	public Long nbrOffresManager(Long id) {
+		// TODO Auto-generated method stub
+		return offreRepository.NbrOffresManager(id);
+	}
+	@Override
+	public List<OffreStat> offreStat() {
+		// TODO Auto-generated method stub
+		return offreRepository.statOffre();
+	}
+	
+	
 
 	
 

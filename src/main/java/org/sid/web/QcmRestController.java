@@ -265,6 +265,57 @@ public class QcmRestController {
 	{
 	return qcmService.nbrQuestionsByQcm(id);	
 	}
+	@RequestMapping(value="/nbrSuggestionByQuestion",method=RequestMethod.GET)
+	public Long nbrSuggestionByQuestion(@RequestParam(name="id")	Long id) 
+	{
+	return qcmService.nbrSuggestionsByQuestion(id);
+	}
 	
+	
+	@RequestMapping(value="/nbrQuizs",method=RequestMethod.GET)
+	public Long nbrQuizs() 
+	{
+	return qcmService.nbrQuizs();
+	} 
+	@RequestMapping(value="/nbrQuizsRepondus",method=RequestMethod.GET)
+	public Long nbrQuizsRepondus(@RequestParam(name="id")	Long id) 
+	{
+	return qcmService.nbrQuizsrepondus(id);
+	} 
+	@RequestMapping(value="/nbrQuizsManager",method=RequestMethod.GET)
+	public Long nbrQuizsManager(@RequestParam(name="id")	Long id) 
+	{
+	return qcmService.nbrQuizsManager(id);
+	} 
+	@RequestMapping(value="/nbrRepQuizsManager",method=RequestMethod.GET)
+	public Long nbrRepQuizsManager(@RequestParam(name="id")	Long id) 
+	{
+	return qcmService.nbrReps(id);
+	}
+	@RequestMapping(value="/nbrQuizsOffre",method=RequestMethod.GET)
+	public Long nbrQuizsOffre(@RequestParam(name="id")	Long id) 
+	{
+	return qcmService.nbrQuizOffre(id);
+	} 
+	@RequestMapping(value="/admin/nbrRepCorrect",method=RequestMethod.GET)
+	public Long nbrRepCorrect() 
+	{
+	return qcmService.nbrRepCorrect();
+	} 
+	@RequestMapping(value="/admin/nbrRepFausse",method=RequestMethod.GET)
+	public Long nbrRepFausse() 
+	{
+	return qcmService.nbrRepFausse();
+	} 
+	@RequestMapping(value="/admin/nbrMoyenne",method=RequestMethod.GET)
+	public Long nbrMoyenne() 
+	{
+	return qcmService.nbrMoyenne();
+	} 
+	@RequestMapping(value="/admin/nbrRed",method=RequestMethod.GET)
+	public Long nbrRed() 
+	{
+	return qcmService.nbrRed();
+	} 
 	
 }

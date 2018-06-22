@@ -19,8 +19,12 @@ public interface QcmRepository extends JpaRepository<Qcm, Long>{
 	@Query("select count(*) from Qcm q where q.id=:id and q.offre.manager.id=:u")
 	public int qcmManager(@Param("id")Long id,@Param("u")Long u );
 	
-	@Query("select count(*) from Qcm q")
+	@Query("select count(id) from Qcm q")
 	public Long nbrQuizs();
+	@Query("select count(id) from Qcm q where q.offre.manager.id=:id")
+	public Long nbrQuizsManager(@Param("id")Long id);
 	
+	@Query("select count(id) from Qcm q where q.offre.id=:id")
+	public Long nbrQuizsOffre(@Param("id")Long id);
 	
 }

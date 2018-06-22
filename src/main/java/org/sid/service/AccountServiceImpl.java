@@ -206,6 +206,24 @@ Appuser appUser=userRepository.findUserByEmail(username);
 				// TODO Auto-generated method stub
 				return userRepository.nbrManager();
 			}
+
+			@Override
+			public Long nbrEtudiants() {
+				// TODO Auto-generated method stub
+				return userRepository.nbrEtudiant();
+			}
+
+			@Override
+			public Long nbrMessageriesEtudiants() {
+				// TODO Auto-generated method stub
+				return messagerieRepository.nbrMessageriesEtudiants();
+			}
+
+			@Override
+			public Long nbrMessageriesEntreprises() {
+				// TODO Auto-generated method stub
+				return messagerieRepository.nbrMessageriesManager();
+			}
 			
 		
 

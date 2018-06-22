@@ -18,7 +18,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long>{
 	public Page<Question> getQuestions(@Param("qcm") Long qcm,Pageable pageable);
 	
 	
-	@Query("select count(*) from Question q where q.qcm.id=:qcm  and ((select count(*) from Suggestion s where s MEMBER OF q.suggestions)>=2)")
+	@Query("select count(*) from Question q where q.qcm.id=:qcm ")
 	public Long nbrQuestions(@Param("qcm") Long qcm);
 	@Query("select count(*) from Question q where q.id=:id and q.qcm.offre.manager.id=:u")
 	public int questionManager(@Param("id")Long id,@Param("u")Long u );

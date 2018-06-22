@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.sid.entities.Appuser;
 import org.sid.entities.Offre;
+import org.sid.form.OffreStat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,5 +25,10 @@ public interface OffreRepository extends JpaRepository<Offre,Long>{
 	@Query("select count(*) from Offre o")
 	public Long NbrOffres( );
 
-
+	@Query("select count(*) from Offre o where o.manager.id=:id")
+	public Long NbrOffresManager(@Param("id")Long id);
+	
+	@Query("select  new org.sid.form.OffreStat(count(o.id),o.entreprise) from Offre o group by o.entreprise order by count(o.id) desc")
+	public List<OffreStat> statOffre();
+	
 }

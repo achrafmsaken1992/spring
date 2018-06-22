@@ -72,7 +72,7 @@ OffreRepository offreRepository;
 	@Value("${gmail.password}")
 	private String password;
 	
-	@RequestMapping(value="/admin/getManagers",method=RequestMethod.GET)
+	@RequestMapping(value="/getManagers",method=RequestMethod.GET)
 	public Page<Appuser> getManagers(
 			@RequestParam(name="nom",defaultValue="")	String nom,
 			@RequestParam(name="prenom",defaultValue="")	String prenom,

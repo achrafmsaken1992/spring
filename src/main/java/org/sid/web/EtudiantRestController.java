@@ -18,6 +18,7 @@ import org.sid.entities.AppRole;
 import org.sid.entities.Appuser;
 import org.sid.entities.Messagerie;
 import org.sid.entities.Offre;
+import org.sid.form.CompetanceStat;
 import org.sid.form.EmailMessages;
 import org.sid.form.EtudiantForm;
 import org.sid.form.RegisterForm;
@@ -100,6 +101,7 @@ private String password;
 appUser.setDateNaissance(form.getDateNaissance());
 			appUser.setDateNaissance(form.getDateNaissance());
 			appUser.setPrenom(form.getPrenom());
+			appUser.setCin(form.getCin());
 			appUser.setNom(form.getNom());
 			appUser.setTel(form.getTel());
 			appUser.setPassword("1234");
@@ -277,7 +279,7 @@ accountService.saveUser(appUser);
 	
 		return accountService.getManagersMessagerie("%"+mot+"%");
    }
-	@RequestMapping(value="/etudiant/getAllOffres",method=RequestMethod.GET)
+	@RequestMapping(value="/getAllOffres",method=RequestMethod.GET)
 	public Page<Offre> getManagers(
 			
 			@RequestParam(name="mot",defaultValue="")	String mot,
@@ -306,6 +308,16 @@ accountService.saveUser(appUser);
 		
 	
 		return accountService.findUserById(id);
+   }
+	
+	
+	@RequestMapping(value="admin/competanceStat",method=RequestMethod.GET)
+	public List<CompetanceStat> getEtudiantById()
+			
+   {
+		
+	
+		return etudiantService.competanceStat();
    }
 	
 }

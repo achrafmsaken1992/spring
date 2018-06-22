@@ -47,7 +47,14 @@ public Long nbrParticipantsReussis(Long qcm);
 public int isQcmManager(Long id,Long manager);
 public int isQuestionManager(Long id,Long manager);
 public Long nbrQuestionsByQcm(Long id);
-public Long nbrQuizs(Long id);
+public Long nbrQuizs();
 public Long nbrQuizsrepondus(Long id);
-
+public Long nbrQuizsManager(Long id);
+public Long nbrReps(Long id);
+public Long nbrSuggestionsByQuestion(Long id);
+public Long nbrQuizOffre(Long id);
+public Long nbrRepCorrect();
+public Long nbrRepFausse();
+public Long nbrMoyenne();
+public Long nbrRed();
 }

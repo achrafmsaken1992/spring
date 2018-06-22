@@ -37,6 +37,23 @@ public Long nbrParticipantsReussis(@Param("qcm")Long qcm);
 
 @Query("select count(*) from Note n where n.etudiant.id=:id   ")
 public Long nbrQuizsEtudiant(@Param("id")Long id);
+
+@Query("select count(distinct id) from Note n where n.qcm.offre.manager.id=:id")
+public Long nbrRepQuizsManager(@Param("id")Long id);
+
+@Query("select sum(n.reponseCorrect) from Note n")
+public Long nbrRepCorrect();
+
+@Query("select sum(n.reponseFausse) from Note n")
+public Long nbrRepFausse();
+
+
+@Query("select count(n.id) from Note n where n.reponseCorrect>=n.reponseFausse")
+public Long nbrMoyenne();
+
+@Query("select count(n.id) from Note n where n.reponseCorrect<n.reponseFausse")
+public Long nbrRed();
+
 }
 
 

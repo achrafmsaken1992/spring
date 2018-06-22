@@ -24,5 +24,22 @@ public interface MessagerieRepository extends JpaRepository<Messagerie,Long>{
 	
 	@Query("select count(*) from Messagerie m where m.user1.id=:u")
 	public Long nbrMessageriesEnvoye(@Param("u")Long user);
-
+	
+	
+	@Query("select count(DISTINCT m.id) from Messagerie m "
+			+ "where m.user1.id in "
+			+ "(select c.id from  Appuser c,AppRole r where "
+			+ " c.active=1 and c.valide=1 and r.roleName='MANAGER' and r  MEMBER OF  c.roles)")
+	public Long nbrMessageriesManager();
+	
+	
+	@Query("select count(DISTINCT m.id) from Messagerie m "
+			+ "where m.user1.id in "
+			+ "(select c.id from  Appuser c,AppRole r where "
+			+ " c.active=1 and c.valide=1 and r.roleName='ETUDIANT' and r  MEMBER OF  c.roles)")
+	public Long nbrMessageriesEtudiants();
+	
+	
+	
+//,AppRole r where  c.active=1 and c.valide=1 and r.roleName='ETUDIANT' and r  MEMBER OF  c.roles
 }

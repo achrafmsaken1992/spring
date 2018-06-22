@@ -51,9 +51,11 @@ public interface UserRepository extends JpaRepository<Appuser, Long>{
 	
 	
 	
-	@Query("select count(*) from Appuser c,AppRole r where  c.active=:active and c.valide=:valide and r.roleName='MANAGER' and r  MEMBER OF  c.roles")
+	@Query("select count(*) from Appuser c,AppRole r where  c.active=1 and c.valide=1 and r.roleName='MANAGER' and r  MEMBER OF  c.roles")
 	public Long nbrManager();
 	
+	@Query("select count(*) from Appuser c,AppRole r where  c.active=1 and c.valide=1 and r.roleName='ETUDIANT' and r  MEMBER OF  c.roles")
+	public Long nbrEtudiant();
 	
 	
 	

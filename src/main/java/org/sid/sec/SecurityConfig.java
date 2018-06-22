@@ -61,6 +61,7 @@ private BCryptPasswordEncoder  bCryptPasswordEncoder ;
 		http.authorizeRequests().antMatchers("/etudiant/**").hasAuthority("ETUDIANT");
 		http.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN");
 		http.authorizeRequests().antMatchers("/manager/**").hasAuthority("MANAGER");
+		http.authorizeRequests().antMatchers("/getManagers/**").hasAnyAuthority("ETUDIANT","ADMIN");
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new JWTAuthentificationFilter(authenticationManager()));
 		http.addFilterBefore(new JWTAuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);

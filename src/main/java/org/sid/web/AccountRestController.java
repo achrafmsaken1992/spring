@@ -25,6 +25,7 @@ import org.sid.form.ContactForm;
 import org.sid.form.EmailMessages;
 import org.sid.form.ForgetPasswordForm;
 import org.sid.form.MessagerieForm;
+import org.sid.form.OffreStat;
 import org.sid.form.RegisterForm;
 import org.sid.form.UpdatePasswordForm;
 import org.sid.service.AccountService;
@@ -103,6 +104,7 @@ CreateDirectoryService createDirectoryService;
     			
     			appUser.setDateCreation(new Date());
 appUser.setDateNaissance(form.getDateNaissance());
+
     			appUser.setNomEntreprise(form.getNomEntreprise());
     			appUser.setPrenom(form.getPrenom());
     			appUser.setNom(form.getNom());
@@ -366,7 +368,7 @@ appUser.setToken(uuid);
     		
     		EmailMessages em = new EmailMessages();
     		em.setBody("<a href='http://localhost:4200/updateAuth/"+digest
-    		+"'>lien web</a>");
+    		+"'>lien récupération mot de passe</a>");
     		em.setTo_address(email);
     		em.setSubject("validation");
     		
@@ -526,23 +528,47 @@ public Long nbrMessageEnvoye(@RequestParam(name="id")	Long id)
 return accountService.nbrMessagesEnvoye(id);	
 }   	
 @RequestMapping(value="/nbrOffres",method=RequestMethod.GET)
-public Long nbrOffres(@RequestParam(name="id")	Long id) 
+public Long nbrOffres() 
 {
-return offreService.nbrOffres(id);	
+return offreService.nbrOffres();	
 } 
-@RequestMapping(value="/nbrQuizs",method=RequestMethod.GET)
-public Long nbrQuizs(@RequestParam(name="id")	Long id) 
-{
-return qcmService.nbrQuizs(id);
-} 
-@RequestMapping(value="/nbrQuizs",method=RequestMethod.GET)
-public Long nbrQuizsRepondus(@RequestParam(name="id")	Long id) 
-{
-return qcmService.nbrQuizs(id);
-} 
+
 @RequestMapping(value="/nbrEntreprises",method=RequestMethod.GET)
 public Long nbrEntreprises() 
 {
 return userdao.nbrManager();
-}    	
+}
+@RequestMapping(value="/nbrEtudiants",method=RequestMethod.GET)
+public Long nbrEtudiants() 
+{
+return accountService.nbrEtudiants();	
+} 
+@RequestMapping(value="/nbrOffreManager",method=RequestMethod.GET)
+public Long nbrOffreManager(@RequestParam(name="id")	Long id) 
+{
+return offreService.nbrOffresManager(id);	
+}   
+//nbrMessageriesEtudiants
+@RequestMapping(value="/nbrMessageriesEtudiants",method=RequestMethod.GET)
+public Long nbrMessageriesEtudiants() 
+{
+return accountService.nbrMessageriesEtudiants();
+
+} 
+@RequestMapping(value="/nbrMessageriesManagers",method=RequestMethod.GET)
+public Long nbrMessageriesManagers() 
+{
+return accountService.nbrMessageriesEntreprises();
+
+} 
+
+@RequestMapping(value="/admin/offreStat",method=RequestMethod.GET)
+public List<OffreStat> offreStat() 
+{
+return offreService.offreStat();
+
+} 
+
+
+
 }

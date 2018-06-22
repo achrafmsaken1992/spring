@@ -42,4 +42,8 @@ public void deleteMessage(Long id);
 public Long nbrMessagesRecu(Long id);
 public Long nbrMessagesEnvoye(Long id);
 public Long nbrEntreprises(Long id);
+public Long nbrEtudiants();
+public Long nbrMessageriesEtudiants();
+public Long nbrMessageriesEntreprises();
+
 }
